@@ -1,0 +1,1009 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="关于计算机网络知识的学习，不仅仅是 Linux 下的网络管理。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 网络学习">
+<meta property="og:url" content="http://github.com/willsmist.github.io/2017/02/25/linux-network-management/index.html">
+<meta property="og:site_name" content="半亩方塘">
+<meta property="og:description" content="关于计算机网络知识的学习，不仅仅是 Linux 下的网络管理。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://github.com/images/network/datagram.jpg">
+<meta property="og:updated_time" content="2019-07-08T21:09:19.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 网络学习">
+<meta name="twitter:description" content="关于计算机网络知识的学习，不仅仅是 Linux 下的网络管理。">
+<meta name="twitter:image" content="http://github.com/images/network/datagram.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://github.com/willsmist.github.io/2017/02/25/linux-network-management/">
+
+
+
+
+
+  <title> Linux 网络学习 | 半亩方塘 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">半亩方塘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Will's Notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2017/02/25/linux-network-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Will Yang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半亩方塘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux 网络学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-25T00:09:28+08:00">
+                2017-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/" itemprop="url" rel="index">
+                    <span itemprop="name">Technique</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于计算机网络知识的学习，不仅仅是 Linux 下的网络管理。</p>
+<a id="more"></a>
+
+<h2 id="ISO-OSI-模型"><a href="#ISO-OSI-模型" class="headerlink" title="ISO/OSI 模型"></a>ISO/OSI 模型</h2><p>网络是做什么的？传输数据。怎么传输？例如 ISO/OSI 模型。</p>
+<ul>
+<li>OSI : Open System Interconnetion</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>ISO/OSI</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用层</td>
+<td>用户接口</td>
+</tr>
+<tr>
+<td>表示层</td>
+<td>数据的表现形式、特定功能如加密</td>
+</tr>
+<tr>
+<td>会话层</td>
+<td>确定网络数据是否要经过远程会话</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>确定传输协议(TCP或UDP)及端口号、传输前的错误检测、流控</td>
+</tr>
+<tr>
+<td>网络层</td>
+<td>IP 地址(包括源和目标的 IP 地址)、选路</td>
+</tr>
+<tr>
+<td>数据链路层</td>
+<td>组帧、MAC 地址、错误检测与修正</td>
+</tr>
+<tr>
+<td>物理层</td>
+<td>设备之间的比特流的传输、物理接口、电气特性等</td>
+</tr>
+</tbody></table>
+<p>说明</p>
+<ul>
+<li>表示层：数据的编码、加密、压缩等</li>
+<li>流控：例如根据网络的快慢决定什么时候传输。</li>
+<li>选路：数据是通过各个路由器传递的，选路就是确定数据经由哪些路由器节点。</li>
+<li>物理接口：例如网线的一端接口是什么样的。</li>
+<li>电气特性：例如8根线网线只有1、3、2、6用于网络物理层传输。</li>
+</ul>
+<h2 id="TCP-IP-模型"><a href="#TCP-IP-模型" class="headerlink" title="TCP/IP 模型"></a>TCP/IP 模型</h2><p>TCP : Transmission Control Protocol<br>IP : Internet Protocol</p>
+<p>TCP/IP 参考了 ISO/OSI ，其对应关系如下:</p>
+<table>
+<thead>
+<tr>
+<th>TCP/IT</th>
+<th>ISO/OSI</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用层</td>
+<td>应用层、表示层、会话层</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>传输层</td>
+</tr>
+<tr>
+<td>网际互连层</td>
+<td>网络层</td>
+</tr>
+<tr>
+<td>网络接口层</td>
+<td>数据链路层、物理层</td>
+</tr>
+</tbody></table>
+<h3 id="网络接入层"><a href="#网络接入层" class="headerlink" title="网络接入层"></a>网络接入层</h3><p>负责监视数据在主机和网络之间的交换。事实上，TCP/IP本身并未定义该层的协议，而是由参与互联的各网络使用自己的物理层和数据链路层协议，然后与 TCP/IP 的网络接入层进行连接。<strong>地址解析协议(ARP)</strong> 工作在此层，即 ISO/OSI 的数据链路层。</p>
+<ul>
+<li>ARP : Address Resolution Protocol</li>
+</ul>
+<p>ARP 把 IP 翻译成长度为 48 位，用 12 个十六进制表示的网卡物理地址，同网段或者说局域网传输数据用的不是 IP 地址，而是网卡的物理地址。IP 地址用于跨网段或者说公网、互联网传输数据。</p>
+<p>交换机只识别网卡物理地址，不能识别 IP 地址。</p>
+<p>在 windows CMD 下执行 <strong>arp -a</strong>，列出跟当前计算机所有有联系的 IP的 MAC 地址:</p>
+<pre><code>C:\Users\will&gt;arp -a
+
+接口: 192.168.1.2 --- 0xd #本机
+  Internet 地址         物理地址              类型
+  192.168.1.1           a0-91-c8-a3-4b-18     动态 #路由器
+  192.168.1.4           c8-f6-50-09-12-d7     动态 #iPad
+  192.168.1.255         ff-ff-ff-ff-ff-ff     静态
+  224.0.0.2             01-00-5e-00-00-02     静态
+  224.0.0.22            01-00-5e-00-00-16     静态
+  224.0.0.251           01-00-5e-00-00-fb     静态
+  224.0.0.252           01-00-5e-00-00-fc     静态
+  239.255.255.250       01-00-5e-7f-ff-fa     静态
+  255.255.255.255       ff-ff-ff-ff-ff-ff     静态</code></pre><p>通过 <strong>ping</strong> 只要可以 ping 通就可以查看局域网某台机器的 MAC 地址。</p>
+<pre><code>C:\Users\will&gt;ping 192.168.1.6
+
+正在 Ping 192.168.1.6 具有 32 字节的数据:
+来自 192.168.1.6 的回复: 字节=32 时间&lt;1ms TTL=64
+来自 192.168.1.6 的回复: 字节=32 时间&lt;1ms TTL=64
+来自 192.168.1.6 的回复: 字节=32 时间&lt;1ms TTL=64
+来自 192.168.1.6 的回复: 字节=32 时间&lt;1ms TTL=64
+
+192.168.1.6 的 Ping 统计信息:
+    数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，
+往返行程的估计时间(以毫秒为单位):
+    最短 = 0ms，最长 = 0ms，平均 = 0ms
+
+C:\Users\will&gt;arp -a
+
+接口: 192.168.1.2 --- 0xd
+  Internet 地址         物理地址              类型
+  192.168.1.1           a0-91-c8-a3-4b-18     动态
+  192.168.1.4           c8-f6-50-09-12-d7     动态
+  192.168.1.6           00-16-d4-e9-4d-56     动态
+  192.168.1.255         ff-ff-ff-ff-ff-ff     静态
+  224.0.0.2             01-00-5e-00-00-02     静态
+  224.0.0.22            01-00-5e-00-00-16     静态
+  224.0.0.251           01-00-5e-00-00-fb     静态
+  224.0.0.252           01-00-5e-00-00-fc     静态
+  239.255.255.250       01-00-5e-7f-ff-fa     静态
+  255.255.255.255       ff-ff-ff-ff-ff-ff     静态</code></pre><h3 id="网际互联层"><a href="#网际互联层" class="headerlink" title="网际互联层"></a>网际互联层</h3><p>主要解决主机到主机的通信问题。它所包含的协议解决数据包在整个网络上的逻辑传输。该层有三个主要协议：IP、IGMP、ICMP。</p>
+<ul>
+<li><p>IGMP : Internet Group Management Protocol</p>
+</li>
+<li><p>ICMP : Internet Control Messages Protocol</p>
+<p><strong>ping</strong> 使用的就是 ICMP 。</p>
+</li>
+</ul>
+<h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>为应用层实体提供端到端的的通信功能，保证数据包的顺序传送及数据的完整性。两个主要协议：TCP、UDP。</p>
+<ul>
+<li>UDP : User Datagram Protocol</li>
+</ul>
+<p>三次握手源自有名的 <strong>两军问题</strong><br>参考：<a href="http://blog.csdn.net/stone8761/article/details/51680790" target="_blank" rel="noopener">http://blog.csdn.net/stone8761/article/details/51680790</a></p>
+<p><strong>虽然模型名称是 TCP/IP ，但传输层可以有 UDP ??? 是这样么？？？</strong></p>
+<h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>为用户提供所需要的各种服务，例如：FTP、Telnet、DNS、SMTP 等。</p>
+<ul>
+<li>FTP : File Transfer Protocol</li>
+<li>Telnet : 远程登录</li>
+<li>DNS : Domain Name Server</li>
+<li>SMTP : Simple Message Transfer Protocol</li>
+</ul>
+<p>FTP 接收端口号：21</p>
+<h3 id="数据封装过程"><a href="#数据封装过程" class="headerlink" title="数据封装过程"></a>数据封装过程</h3><p><img src="/images/network/datagram.jpg" alt></p>
+<h2 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h2><h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><h2 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h2><p>交换机属于数据链路层设备</p>
+<h2 id="Linux-网络配置"><a href="#Linux-网络配置" class="headerlink" title="Linux 网络配置"></a>Linux 网络配置</h2><pre><code>[will@syst ~]$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:16:D4:E9:4D:56  
+          inet addr:192.168.1.6  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::216:d4ff:fee9:4d56/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1076 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:231 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:124591 (121.6 KiB)  TX bytes:21331 (20.8 KiB)
+          Interrupt:16
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)</code></pre><p>对于 eth0:</p>
+<ul>
+<li>Link encap - 网络类型：Ethernet</li>
+<li>HWaddr - 网卡的物理地址 MAC : 00:16:D4:E9:4D:56</li>
+<li>inet addr - 当前 ip 地址</li>
+<li>Bcast - 广播地址</li>
+<li>Mask - 子网掩码</li>
+<li>inet6 addr - ip v6 地址</li>
+<li>MTU - 最大传输单元</li>
+<li>RX packets - 当前接收到的数据包</li>
+<li>TX packets - 当前发送的数据包</li>
+<li>RX bytes</li>
+<li>TX bytes</li>
+<li>Interrupt -</li>
+</ul>
+<p>网卡 lo 是本地环回网卡，用于测试当前系统网络协议是否正常，可以 ping 通。</p>
+<h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><blockquote>
+<p>This program is obsolete!  For replacement check <strong>ip addr</strong> and <strong>ip link</strong>.  For statistics use <strong>ip -s link</strong>.</p>
+</blockquote>
+<p>配置的 IP 是临时生效的</p>
+<h3 id="网卡配置文件"><a href="#网卡配置文件" class="headerlink" title="网卡配置文件"></a>网卡配置文件</h3><p>/etc/sysconfig/network-scripts/ifcfg-eth0</p>
+<p>DEVICE=eth0  网卡设备名,要与配置文件名称一致<br>BOOTPROTO=</p>
+<pre><code>[will@syst ~]$ sudo vi /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+HWADDR=00:16:D4:E9:4D:56
+TYPE=Ethernet
+UUID=20343218-b4de-459b-b1ff-a7ee3b78f11a
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=192.168.1.6
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+DNS1=202.106.46.151
+DNS2=202.106.195.68
+USERCTL=no
+IPV6INIT=no</code></pre><h3 id="主机名文件"><a href="#主机名文件" class="headerlink" title="主机名文件"></a>主机名文件</h3><p>/etc/sysconfig/network</p>
+<pre><code>[will@syst ~]$ hostname
+syst
+
+[will@syst ~]$ sudo vi /etc/sysconfig/network
+NETWORKING=yes
+HOSTNAME=syst</code></pre><h3 id="DNS-配置文件"><a href="#DNS-配置文件" class="headerlink" title="DNS 配置文件"></a>DNS 配置文件</h3><p>/etc/resolv.conf</p>
+<p>对于 ubuntu ,有些差异，它建议设置在 /etc/resolvconf.d/ 下</p>
+<h2 id="修改-UUID"><a href="#修改-UUID" class="headerlink" title="修改 UUID"></a>修改 UUID</h2><p>对于虚拟机复制来的 Linux ，网卡配置文件中的 UUID 是相同的，需要修改：</p>
+<ul>
+<li>删除网卡配置文件中的 HWADDR 这一行，也就是 MAC 地址</li>
+<li>sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules，删除网卡和 MAC 地址绑定文件</li>
+<li>重启系统</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/24/regular-expression/" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/26/linux-system-management/" rel="prev" title="Linux 系统管理">
+                Linux 系统管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Will Yang">
+          <p class="site-author-name" itemprop="name">Will Yang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Learning, Practising and Thinking</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yourdaisy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/cloudskyygl" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/cloudygl" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ISO-OSI-模型"><span class="nav-number">1.</span> <span class="nav-text">ISO/OSI 模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP-模型"><span class="nav-number">2.</span> <span class="nav-text">TCP/IP 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络接入层"><span class="nav-number">2.1.</span> <span class="nav-text">网络接入层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网际互联层"><span class="nav-number">2.2.</span> <span class="nav-text">网际互联层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传输层"><span class="nav-number">2.3.</span> <span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用层"><span class="nav-number">2.4.</span> <span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据封装过程"><span class="nav-number">2.5.</span> <span class="nav-text">数据封装过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP"><span class="nav-number">3.</span> <span class="nav-text">IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS"><span class="nav-number">4.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网关"><span class="nav-number">5.</span> <span class="nav-text">网关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-网络配置"><span class="nav-number">6.</span> <span class="nav-text">Linux 网络配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ifconfig"><span class="nav-number">6.1.</span> <span class="nav-text">ifconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网卡配置文件"><span class="nav-number">6.2.</span> <span class="nav-text">网卡配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主机名文件"><span class="nav-number">6.3.</span> <span class="nav-text">主机名文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS-配置文件"><span class="nav-number">6.4.</span> <span class="nav-text">DNS 配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-UUID"><span class="nav-number">7.</span> <span class="nav-text">修改 UUID</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will Yang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

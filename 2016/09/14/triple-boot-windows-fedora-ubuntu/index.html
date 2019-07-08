@@ -1,0 +1,817 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linux,Windows,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="将这三个系统安装到同一台电脑上并不难，难的是达到身患强迫症的笔者的要求，还是要折腾不少，我已经记不清重装了多少次了(没办法，患有强迫症的小白解决问题的方法只有重装)。虽然这其中经历了各种苦不堪言，但是对于所获得的知识和道理，那又算得了什么呢？">
+<meta name="keywords" content="Linux,Windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UEFI 安装 Windows 10,Fedora 24 &amp; Ubuntu 16.04">
+<meta property="og:url" content="http://github.com/willsmist.github.io/2016/09/14/triple-boot-windows-fedora-ubuntu/index.html">
+<meta property="og:site_name" content="半亩方塘">
+<meta property="og:description" content="将这三个系统安装到同一台电脑上并不难，难的是达到身患强迫症的笔者的要求，还是要折腾不少，我已经记不清重装了多少次了(没办法，患有强迫症的小白解决问题的方法只有重装)。虽然这其中经历了各种苦不堪言，但是对于所获得的知识和道理，那又算得了什么呢？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-08T21:09:19.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UEFI 安装 Windows 10,Fedora 24 &amp; Ubuntu 16.04">
+<meta name="twitter:description" content="将这三个系统安装到同一台电脑上并不难，难的是达到身患强迫症的笔者的要求，还是要折腾不少，我已经记不清重装了多少次了(没办法，患有强迫症的小白解决问题的方法只有重装)。虽然这其中经历了各种苦不堪言，但是对于所获得的知识和道理，那又算得了什么呢？">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://github.com/willsmist.github.io/2016/09/14/triple-boot-windows-fedora-ubuntu/">
+
+
+
+
+
+  <title> UEFI 安装 Windows 10,Fedora 24 & Ubuntu 16.04 | 半亩方塘 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">半亩方塘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Will's Notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2016/09/14/triple-boot-windows-fedora-ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Will Yang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半亩方塘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                UEFI 安装 Windows 10,Fedora 24 & Ubuntu 16.04
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-14T17:29:05+08:00">
+                2016-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/" itemprop="url" rel="index">
+                    <span itemprop="name">Technique</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>将这三个系统安装到同一台电脑上并不难，难的是达到身患强迫症的笔者的要求，还是要折腾不少，我已经记不清重装了多少次了(没办法，患有强迫症的小白解决问题的方法只有重装)。虽然这其中经历了各种苦不堪言，但是对于所获得的知识和道理，那又算得了什么呢？</p>
+<a id="more"></a>
+
+<hr>
+<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>Windows 是多数普通人最熟悉的桌面操作系统，而且很多事情对笔者来说也是离不开的。选择 Ubuntu 和 Fedora ，是因为 Ubuntu 是 Linux 中比较火的桌面操作系统，其网络上的资源非常丰富，基本上没有 Google 解决不了的问题，这也是笔者将 Ubuntu 作为主 Lunux 系统的原因之一。至于 Fedora 嘛，据说Linux 的缔造者 Linus 都在使用，当然要安装它了,还有一部分原因是 Fedora 和 Ubuntu 使用的是不同的包管理系统，这也是出于学习 Linux 的考虑。</p>
+<h1 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h1><p>本节的所有操作是在 Windows 10 上完成的。</p>
+<ul>
+<li>备份、备份、备份，重要的事情说三遍。</li>
+<li>假定已经 UEFI 安装 Windows 10，Windows 的安装就不赘述了。需要注意的是电脑的启动方式设置为 UEFI，并且在“选择安装位置”这一步时要删除全部分区，再重新分区，应该只有这样才能使硬盘分区格式从 MBR 转换为 GPT。当然也可以 <code>Shift+F10</code> 开启命令行窗口，使用 <code>diskpart</code> 进行这一步。</li>
+<li>下载 <a href="https://getfedora.org/en/workstation/download/" target="_blank" rel="noopener">Fedora 24 Workstation Live</a> 镜像文件</li>
+<li>下载 <a href="http://www.ubuntu.com/download/desktop" target="_blank" rel="noopener">Ubuntu 16.04 LTS Desktop</a> 镜像文件</li>
+</ul>
+<p>有了以上文件，就可以开始制作 Fedora 和 Ubuntu 的可启动U盘了，需要说明的是 Fedora 24 的官方安装说明 <a href="https://docs.fedoraproject.org/en-US/Fedora/24/html/Installation_Guide/sect-preparing-boot-media.html" target="_blank" rel="noopener">Installation Guide</a>推荐使用 <a href="https://github.com/downloads/openSUSE/kiwi/ImageWriter.exe">SUSE Studio ImageWriter</a> 或 <a href="http://www.netbsd.org/~martin/rawrite32/" target="_blank" rel="noopener">Rawrite32</a>，笔者选择的是 Rawrite32。对于 Ubuntu 笔者使用的是 <a href="http://rufus.akeo.ie/" target="_blank" rel="noopener">Rufus</a>。</p>
+<p><strong>如果使用 Rawrite32 使得U盘空间不可用，请参考这篇文章：<a href="http://www.ampercent.com/recover-lost-space-removable-usb-drive/9352/" target="_blank" rel="noopener">How To Use DiskPart Command To Recover Missing Or Unallocated Space On A USB Drive</a></strong></p>
+<h1 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h1><p>对于具体的安装过程，本文只是一笔带过，图形界面安装过程实在是太简单了(笔者并不会字符界面安装 Linux)。</p>
+<h2 id="安装-Fedora"><a href="#安装-Fedora" class="headerlink" title="安装 Fedora"></a>安装 Fedora</h2><p>先安装 Fedora ，是因为笔者想用 Ubuntu 作为默认引导的系统。通过最后安装 Ubuntu 以最少的配置来实现这一点，这样就可以不用或者更少地修改 grub 配置。</p>
+<p>使电脑从可启动U盘启动，进入 Fedora 安装界面，根据需要进行设置，设置完成就可以点击开始安装进行安装了，详细过程不赘述。重启后安装完成，进行必要的系统更新和软件安装等等。</p>
+<p>需要注意的是，安装 Fedora 24 之前并没有关闭安全启动，这可能是新版本的 Fedora 进行的兼容。</p>
+<h2 id="安装-Ubuntu"><a href="#安装-Ubuntu" class="headerlink" title="安装 Ubuntu"></a>安装 Ubuntu</h2><p>首先要在 BIOS 设置中关闭安全启动，否则会出现即便正确安装了驱动程序，Nvidia 显卡也不能正常工作，结果就是显卡一直处于较高的温度，风扇转的很快,噪音也很大。</p>
+<p>然后使电脑从可启动U盘启动，进入 Ubuntu 安装界面，根据需要进行设置，详细过程不赘述。重启后安装完成，进行必要的系统更新和软件安装等等。</p>
+<h1 id="关于显卡驱动程序"><a href="#关于显卡驱动程序" class="headerlink" title="关于显卡驱动程序"></a>关于显卡驱动程序</h1><p>首先吐槽一下，Nvidia 显卡驱动程序真***(此处省略很多字)，估计这是安装 Linux 最难的地方了。由于笔者笔记本电脑的 Nvidia 显卡具备 Optimus 技术，所以在 Fedora 24 下安装 Linux 版本的显卡驱动始终不能成功。而 Ubuntu 16.04 完全不必担心，因为 Ubuntu 的官方软件库提供了显卡驱动程序，而且可以在 Intel 显卡和 Nvidia 显卡间自由切换。</p>
+<p>此时笔记本的状态是：</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>遇到问题不可怕，可怕的是迟迟找不到正确的解决方案，究其原因还是寻找解决方案的方式途径出了问题。在学会科学上网之前，那就是”有问题找度娘”，结果大多是各种抄袭成风、以讹传讹的博客文章。自从着了科学上网的道，Google、Stack Overflow 等成为我解决问题的首选，而且问题确实很快解决了，这要感谢对 Linux 的折腾。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Windows/" rel="tag"># Windows</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/10/hexo-quickstart/" rel="next" title="使用 Hexo 创建静态博客">
+                <i class="fa fa-chevron-left"></i> 使用 Hexo 创建静态博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/15/hexo-troubleshooting/" rel="prev" title="Hexo 部分问题解决办法(持续更新)">
+                Hexo 部分问题解决办法(持续更新) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Will Yang">
+          <p class="site-author-name" itemprop="name">Will Yang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Learning, Practising and Thinking</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yourdaisy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/cloudskyygl" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/cloudygl" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装前提"><span class="nav-number">2.</span> <span class="nav-text">安装前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始安装"><span class="nav-number">3.</span> <span class="nav-text">开始安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Fedora"><span class="nav-number">3.1.</span> <span class="nav-text">安装 Fedora</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Ubuntu"><span class="nav-number">3.2.</span> <span class="nav-text">安装 Ubuntu</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于显卡驱动程序"><span class="nav-number">4.</span> <span class="nav-text">关于显卡驱动程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will Yang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

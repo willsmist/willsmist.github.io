@@ -1,0 +1,960 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="MySQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="安装 MySQL,仍有一些启动问题未解决，先不研究了">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从二进制包安装 MySQL (未解决)">
+<meta property="og:url" content="http://github.com/willsmist.github.io/2017/03/03/mysql-installation/index.html">
+<meta property="og:site_name" content="半亩方塘">
+<meta property="og:description" content="安装 MySQL,仍有一些启动问题未解决，先不研究了">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-08T21:09:19.794Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从二进制包安装 MySQL (未解决)">
+<meta name="twitter:description" content="安装 MySQL,仍有一些启动问题未解决，先不研究了">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://github.com/willsmist.github.io/2017/03/03/mysql-installation/">
+
+
+
+
+
+  <title> 从二进制包安装 MySQL (未解决) | 半亩方塘 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">半亩方塘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Will's Notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2017/03/03/mysql-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Will Yang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半亩方塘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从二进制包安装 MySQL (未解决)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-03T23:21:26+08:00">
+                2017-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/" itemprop="url" rel="index">
+                    <span itemprop="name">Technique</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>安装 MySQL,仍有一些启动问题未解决，先不研究了</p>
+<a id="more"></a>
+
+<hr>
+<h2 id="获取-MySQL-安装包"><a href="#获取-MySQL-安装包" class="headerlink" title="获取 MySQL 安装包"></a>获取 MySQL 安装包</h2><p>强烈建议对下载的安装包进行验证。</p>
+<h2 id="在-Linux-上安装"><a href="#在-Linux-上安装" class="headerlink" title="在 Linux 上安装"></a>在 Linux 上安装</h2><p><a href="https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html</a></p>
+<h3 id="使用通用二进制包安装"><a href="#使用通用二进制包安装" class="headerlink" title="使用通用二进制包安装"></a>使用通用二进制包安装</h3><blockquote>
+<p>Warning</p>
+</blockquote>
+<blockquote>
+<p>If you have previously installed MySQL using your operating system native package management system, such as yum or apt-get, you may experience problems installing using a native binary. Make sure your previous MySQL installation has been removed entirely (using your package management system), and that any additional files, such as old versions of your data files, have also been removed. You should also check for configuration files such as /etc/my.cnf or the /etc/mysql directory and delete them.</p>
+</blockquote>
+<br>
+
+<blockquote>
+<p>Warning</p>
+</blockquote>
+<blockquote>
+<p>MySQL has a dependency on the <strong>libaio</strong> library. Data directory initialization and subsequent server startup steps will fail if this library is not installed locally. If necessary, install it using the appropriate package manager. For example, on Yum-based systems:</p>
+</blockquote>
+<blockquote>
+<pre><code>shell&gt; yum search libaio  # search for info
+shell&gt; yum install libaio # install library</code></pre></blockquote>
+<blockquote>
+<p>Or, on APT-based systems:</p>
+</blockquote>
+<blockquote>
+<pre><code>shell&gt; apt-cache search libaio # search for info
+shell&gt; apt-get install libaio1 # install library</code></pre></blockquote>
+<p><strong>MySQL Installation Layout for Generic Unix/Linux Binary Package</strong></p>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Contents of Directory</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bin, scripts</td>
+<td>mysqld server, client and utility programs</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Log files, databases</td>
+</tr>
+<tr>
+<td>docs</td>
+<td>MySQL manual in Info format</td>
+</tr>
+<tr>
+<td>man</td>
+<td>Unix manual pages</td>
+</tr>
+<tr>
+<td>include</td>
+<td>Include (header) files</td>
+</tr>
+<tr>
+<td>lib</td>
+<td>Libraries</td>
+</tr>
+<tr>
+<td>share</td>
+<td>Miscellaneous support files, including error messages, sample configuration files, SQL for database installation</td>
+</tr>
+</tbody></table>
+<p>对于 5.7.17 版本，文件 my-default.cnf 位于 MYSQL_INSTALLATION_DIR/support-files目录下。<br>如果需要 my.cnf ，可从该目录下获得模板文件。</p>
+<blockquote>
+<p>Default options are read from the following files in the given order:<br>/etc/my.cnf /etc/mysql/my.cnf /usr/local/mysql/etc/my.cnf ~/.my.cnf</p>
+</blockquote>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization-mysqld.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization-mysqld.html</a><br><a href="https://dev.mysql.com/doc/refman/5.7/en/mysqld-safe.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/mysqld-safe.html</a><br><a href="https://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html</a><br><a href="https://dev.mysql.com/doc/refman/5.7/en/option-files.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/option-files.html</a></p>
+<pre><code>shell&gt; groupadd mysql
+shell&gt; useradd -r -g mysql -s /bin/false mysql
+shell&gt; cd /usr/local
+shell&gt; tar zxvf /path/to/mysql-VERSION-OS.tar.gz
+shell&gt; ln -s full-path-to-mysql-VERSION-OS mysql
+shell&gt; cd mysql
+shell&gt; mkdir mysql-files
+shell&gt; chmod 750 mysql-files
+shell&gt; chown -R mysql .
+shell&gt; chgrp -R mysql .
+shell&gt; scripts/mysql_install_db --user=mysql# MySQL 5.7.0 to 5.7.4
+shell&gt; bin/mysql_install_db --user=mysql    # MySQL 5.7.5
+shell&gt; bin/mysqld --initialize --user=mysql # MySQL 5.7.6 and up
+shell&gt; bin/mysql_ssl_rsa_setup              # MySQL 5.7.6 and up
+shell&gt; chown -R root .
+shell&gt; chown -R mysql data mysql-files
+shell&gt; bin/mysqld_safe --user=mysql &amp; #必须在 base_dir 下执行才能启动 mysql
+# Next command is optional
+shell&gt; cp support-files/mysql.server /etc/init.d/mysql.server</code></pre><blockquote>
+<p><strong>Note</strong></p>
+</blockquote>
+<blockquote>
+<p>This procedure assumes that you have root (administrator) access to your system. Alternatively, you can prefix each command using the <strong>sudo</strong> (Linux) or pfexec (OpenSolaris) command.</p>
+</blockquote>
+<h2 id="连接远程的-mysql-数据库"><a href="#连接远程的-mysql-数据库" class="headerlink" title="连接远程的 mysql 数据库"></a>连接远程的 mysql 数据库</h2><p>修改远程数据库服务器中名为 mysql 的数据库中的 user 表的 host 字段的值。</p>
+<p>可以直接使用 update 语句，将 mysql.user 表中指定 <user> 字段的对应的记录中的 <host> 字段修改为指定的 IP 地址:</host></user></p>
+<pre><code>mysql&gt; USE mysql;
+mysql&gt; UPDATE user SET host = &#39;192.168.1.2&#39; WHERE user = &#39;root&#39;;
+mysql&gt; SELECT host, user FROM user;</code></pre><p>但是这样就无法在本地登录该账户了，最好使用 GRANT 语句：</p>
+<pre><code>mysql&gt; GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;youpassword&#39; WITH GRANT OPTION;
+
+mysql&gt; GRANT SELECT,INSERT,UPDATE,DELETE ON *.* TO &#39;root&#39;@&#39;202.11.10.253&#39; IDENTIFIED BY &quot;dboomysql&quot;;</code></pre><p>给我自己的机器(192.168.1.2)上 mysql 的 root 用户在 192.168.1.10 登录的权限：</p>
+<pre><code>mysql&gt; GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;192.168.1.10&#39; IDENTIFIED BY &#39;648502&#39; WITH GRANT OPTION;
+mysql&gt; SELECT user,host FROM mysql.user;
++-----------+--------------+
+| user      | host         |
++-----------+--------------+
+| root      | 192.168.1.10 |
+| mysql.sys | localhost    |
+| root      | localhost    |
++-----------+--------------+
+</code></pre><p>注意 localhost 等于 127.0.0.1，localhost 不等于本机当前 IP 地址 192.168.1.2，这应该可以在 hosts 中设置，但这样设置应该不妥，因为192.168.1.2 是可变的。</p>
+<h2 id="SSH-Tunnel-隧道-连接-MySQL"><a href="#SSH-Tunnel-隧道-连接-MySQL" class="headerlink" title="SSH Tunnel(隧道)连接 MySQL"></a>SSH Tunnel(隧道)连接 MySQL</h2><pre><code>mysql&gt; SELECT user,host FROM mysql.user;
++-----------+--------------+
+| user      | host         |
++-----------+--------------+
+| root      | 192.168.1.10 |
+| mysql.sys | localhost    |
+| root      | localhost    |
++-----------+--------------+
+</code></pre><ul>
+<li>本机登录：root@localhost 是 mysql 安装时建立的，密码：123456</li>
+<li>远程登录：<a href="mailto:root@192.168.1.10" target="_blank" rel="noopener">root@192.168.1.10</a> 是远程连接 mysql 时建立的，密码：654321</li>
+</ul>
+<p>场景：用户位于 机器 S(localhost)，数据库实例在机器 D 上，由于网络隔离的原因，用户无法直接访问机器 D。但是用户可以通过 SSH 访问机器 M，并且机器 M 能够访问机器 D 上的数据库实例。因此可以考虑将 M 作为跳板，使用 SSH 隧道技术，使用户在机器 S 上可以访问机器 D 上的数据库。</p>
+<p>模拟该场景需要三台机器，但我只有两台，而且也没有可用的虚拟机，怎样才能模拟呢？</p>
+<p>在命令行登录 mysql 时， -h 选项指定数据库所在地址。虽然 127.0.0.1 和 192.168.1.2(本机在局域网的IP) 是同一台机器，但使用 <strong>-h 127.0.0.1</strong> 和 <strong>-h 192.168.1.2</strong> 去登录mysql是不同的。所以正常情况下,使用最初安装mysql时建立的root账户使用 <strong>-h 192.168.1.2</strong> 是无法在本机登录的，正如上面所说，这个 root 账户其实是位于 127.0.0.1 的。因此，可以将 192.168.1.2 作为场景中的机器 D，用户在本机(-h 127.0.0.1)访问本机(-h 192.168.1.2)上的数据库实例，将 192.168.1.10 作为机器 M 。</p>
+<pre><code>$ mysql -h 127.0.0.1 -u root -p123456 #登录成功
+
+$ mysql -h 192.168.1.2 -u root -p123456 #登录失败</code></pre><ul>
+<li><p>S - 127.0.0.1(本机)</p>
+</li>
+<li><p>D - 192.168.1.2(本机)</p>
+</li>
+<li><p>M - 192.168.1.19</p>
+</li>
+</ul>
+<p>建立 SSH 隧道</p>
+<pre><code>$ ssh -fN -L 3308:192.168.1.2:3306 -p 6485 will@192.168.1.10</code></pre><p>用 netstat 查看，SSH 进程在后台监听 3308 端口：</p>
+<pre><code>will@massif:~$ netstat -ptln
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:25              0.0.0.0:*               LISTEN      -               
+tcp        0      0 0.0.0.0:8060            0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:3308          0.0.0.0:*               LISTEN      24908/ssh       
+tcp6       0      0 :::22                   :::*                    LISTEN      -               
+tcp6       0      0 :::25                   :::*                    LISTEN      -               
+tcp6       0      0 :::3306                 :::*                    LISTEN      -               
+tcp6       0      0 ::1:3308                :::*                    LISTEN      24908/ssh</code></pre><p>使用 lsof 查看端口：</p>
+<pre><code>will@massif:~$ lsof -i :3308
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+ssh     24908 will    5u  IPv6 136164      0t0  TCP ip6-localhost:3308 (LISTEN)
+ssh     24908 will    6u  IPv4 136165      0t0  TCP localhost:3308 (LISTEN)</code></pre><pre><code>$ mysql -h 127.0.0.1 -P 3308 -u root -p654321 #从这里的密码可知，用的是 root@192.168.1.10 登录的</code></pre><p>直接访问本地的 3308 端口，就实现了登录</p>
+<p>应该是这样的：创建mysql账户时，用户名、密码是与 host 地址绑定的，而通过 SSH 隧道转发到机器 D 的数据在登录时只用到了用户名和密码，而 host 使用的是跳板机器 M 的地址，所以只能用机器 D 数据库保存的账户信息中 host 为 192.168.1.10 的用户登录。所以对上述场景的模拟并不很合适，但确实实现了本机 mysql 客户端借助中间机器访问本机数据库实例的目的。</p>
+<p>登录数据库后再用 lsof 查看进程</p>
+<pre><code>will@massif:~$ lsof -i :3308
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+ssh     24908 will    5u  IPv6 136164      0t0  TCP ip6-localhost:3308 (LISTEN)
+ssh     24908 will    6u  IPv4 136165      0t0  TCP localhost:3308 (LISTEN)
+ssh     24908 will    7u  IPv4 142973      0t0  TCP localhost:3308-&gt;localhost:10252 (ESTABLISHED)
+mysql   26181 will    3u  IPv4 141312      0t0  TCP localhost:10252-&gt;localhost:3308 (ESTABLISHED)</code></pre><p>$ mysql -h127.0.0.1 -P3308 -uroot -p648502</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/27/linux-sudo/" rel="next" title="sudo 命令">
+                <i class="fa fa-chevron-left"></i> sudo 命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/07/ubuntu-management/" rel="prev" title="Ubuntu 系统管理">
+                Ubuntu 系统管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Will Yang">
+          <p class="site-author-name" itemprop="name">Will Yang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Learning, Practising and Thinking</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yourdaisy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/cloudskyygl" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/cloudygl" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-MySQL-安装包"><span class="nav-number">1.</span> <span class="nav-text">获取 MySQL 安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-Linux-上安装"><span class="nav-number">2.</span> <span class="nav-text">在 Linux 上安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用通用二进制包安装"><span class="nav-number">2.1.</span> <span class="nav-text">使用通用二进制包安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接远程的-mysql-数据库"><span class="nav-number">3.</span> <span class="nav-text">连接远程的 mysql 数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH-Tunnel-隧道-连接-MySQL"><span class="nav-number">4.</span> <span class="nav-text">SSH Tunnel(隧道)连接 MySQL</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will Yang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

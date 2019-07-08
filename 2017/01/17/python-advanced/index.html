@@ -1,0 +1,1000 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Python 进阶学习笔记">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 进阶">
+<meta property="og:url" content="http://github.com/willsmist.github.io/2017/01/17/python-advanced/index.html">
+<meta property="og:site_name" content="半亩方塘">
+<meta property="og:description" content="Python 进阶学习笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-08T21:09:19.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 进阶">
+<meta name="twitter:description" content="Python 进阶学习笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://github.com/willsmist.github.io/2017/01/17/python-advanced/">
+
+
+
+
+
+  <title> Python 进阶 | 半亩方塘 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">半亩方塘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Will's Notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2017/01/17/python-advanced/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Will Yang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半亩方塘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python 进阶
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-17T23:31:45+08:00">
+                2017-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/" itemprop="url" rel="index">
+                    <span itemprop="name">Technique</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Python 进阶学习笔记</p>
+<a id="more"></a>
+
+<hr>
+<h1 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h1><p>本节内容摘自<a href="http://www.ruanyifeng.com/blog/" target="_blank" rel="noopener">阮一峰</a>老师的文章：<a href="http://www.ruanyifeng.com/blog/2012/04/functional_programming.html" target="_blank" rel="noopener">函数式编程初探
+</a></p>
+<p>简单说，”函数式编程”是一种”编程范式”（programming paradigm），也就是如何编写程序的方法论。</p>
+<p>它属于”结构化编程”的一种，主要思想是把运算过程尽量写成一系列嵌套的函数调用。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>函数式编程具有五个鲜明的特点。</p>
+<ol>
+<li><p>函数是”第一等公民”<br>所谓”第一等公民”（first class），指的是函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，</p>
+<p>或者作为别的函数的返回值。举例来说，下面代码中的print变量就是一个函数，可以作为另一个函数的参数。</p>
+</li>
+</ol>
+<pre><code class="javascript">var print = function(i){ console.log(i);};
+
+[1,2,3].forEach(print);</code></pre>
+<ol>
+<li><p>只用”表达式”，不用”语句”<br>“表达式”（expression）是一个单纯的运算过程，总是有返回值；”语句”（statement）是执行某种操作，没有返回值。函数式编程要求，</p>
+<p>只使用表达式，不使用语句。也就是说，每一步都是单纯的运算，而且都有返回值。原因是函数式编程的开发动机，一开始就是为了处理运算（computation），</p>
+<p>不考虑系统的读写（I/O）。”语句”属于对系统的读写操作，所以就被排斥在外。当然，实际应用中，不做I/O是不可能的。因此，编程过程中，</p>
+<p>函数式编程只要求把I/O限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。</p>
+</li>
+<li><p>没有”副作用”<br>所谓”副作用”（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。</p>
+<p>函数式编程强调没有”副作用”，意味着函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</p>
+</li>
+<li><p>不修改状态<br>上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。在其他类型的语言中，</p>
+<p>变量往往用来保存”状态”（state）。不修改变量，意味着状态不能保存在变量中。函数式编程使用参数保存状态，最好的例子就是递归。</p>
+<p>下面的代码是一个将字符串逆序排列的函数，它演示了不同的参数如何决定了运算所处的”状态”。由于使用了递归，函数式语言的运行速度比较慢，</p>
+<p>这是它长期不能在业界推广的主要原因。</p>
+</li>
+</ol>
+<pre><code class="javascript">function reverse(string) {
+　　　　if(string.length == 0) {
+　　　　　　return string;
+　　　　} else {
+　　　　　　return reverse(string.substring(1, string.length)) + string.substring(0, 1);
+　　　　}
+　　}</code></pre>
+<ol>
+<li><p>引用透明<br>引用透明（Referential transparency），指的是函数的运行不依赖于外部变量或”状态”，只依赖于输入的参数，任何时候只要参数相同，</p>
+<p>引用函数所得到的返回值总是相同的。有了前面的第三点和第四点，这点是很显然的。其他类型的语言，函数的返回值往往与系统状态有关，</p>
+<p>不同的状态之下，返回值是不一样的。这就叫”引用不透明”，很不利于观察和理解程序的行为。</p>
+</li>
+</ol>
+<h1 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h1><p>高阶函数：能够接收函数做参数的函数</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>将 g 的定义移入函数 f 内部，防止其他代码调用 g：</p>
+<pre><code class="python">def f():
+    print &#39;f()...&#39;
+    def g():
+        print &#39;g()...&#39;
+    return g
+
+def calc_sum(lst):
+    def lazy_sum():
+        return sum(lst)
+    return lazy_sum</code></pre>
+<p>注意: 发现没法把 lazy_sum 移到 calc_sum 的外部，因为它引用了 calc_sum 的参数 lst。</p>
+<p>像这种内层函数引用了外层函数的变量（参数也算变量），然后返回内层函数的情况，称为闭包（Closure）。</p>
+<p>闭包的特点是返回的函数还引用了外层函数的局部变量，所以，要正确使用闭包，就要确保引用的局部变量在函数返回后不能变。考察如下代码:</p>
+<pre><code class="python"># 希望一次返回3个函数，分别计算1x1,2x2,3x3:
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i*i
+        fs.append(f)
+    return fs
+
+f1, f2, f3 = count()</code></pre>
+<p>实际结果全部都是 9（请自己动手验证）。</p>
+<p>原因就是当count()函数返回了3个函数时，这3个函数所引用的变量 i 的值已经变成了3。由于f1、f2、f3并没有被调用，所以，此时他们并未计算 i*i，当 f1 被调用时：</p>
+<pre><code class="python">f1()
+9     # 因为f1现在才计算i*i，但现在i的值已经变为3</code></pre>
+<p>因此，返回函数不要引用任何循环变量，或者后续会发生变化的变量。</p>
+<p>考察下面的函数 f:</p>
+<pre><code class="python">def f(j):
+    def g():
+        return j*j
+    return g</code></pre>
+<p>它可以正确地返回一个闭包g，g所引用的变量j不是循环变量，因此将正常执行。</p>
+<p>在count函数的循环内部，如果借助f函数，就可以避免引用循环变量i。</p>
+<p>参考代码:</p>
+<pre><code class="python">def count():
+    fs = []
+    for i in range(1, 4):
+        def f(j):
+            def g():
+                return j*j
+            return g
+        r = f(i)
+        fs.append(r)
+    return fs
+f1, f2, f3 = count()
+print f1(), f2(), f3()</code></pre>
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><p>高阶函数可以接收函数做参数，有些时候，我们不需要显式地定义函数，直接传入匿名函数更方便。</p>
+<p>在Python中，对匿名函数提供了有限支持。就是只能有一个表达式，不写return，返回值就是该表达式的结果。</p>
+<p>使用匿名函数可以简化代码，返回函数的时候，也可以返回匿名函数。</p>
+<pre><code class="python">myabs = lambda x: -x if x &lt; 0 else x</code></pre>
+<h1 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h1><p>Python的 decorator 本质上就是一个高阶函数，它接收一个函数作为参数，然后，返回一个新函数。</p>
+<p>使用 decorator 用Python提供的 @ 语法，这样可以避免手动编写 f = decorate(f) 这样的代码。</p>
+<p>要让 @log 自适应任何参数定义的函数，可以利用Python的 *args 和 **kw，保证任意个数的参数总是能正常调用：</p>
+<pre><code class="python">def log(f):
+    def fn(*args, **kw):
+        print &#39;call &#39; + f.__name__ + &#39;()...&#39;
+        return f(*args, **kw)
+    return fn</code></pre>
+<p>现在，对于任意函数，@log 都能正常工作。</p>
+<p>考察 @log 装饰器：</p>
+<pre><code class="python">def log(f):
+    def fn(x):
+        print &#39;call &#39; + f.__name__ + &#39;()...&#39;
+        return f(x)
+    return fn</code></pre>
+<p>发现对于被装饰的函数，log打印的语句是不能变的（除了函数名）。</p>
+<p>如果有的函数非常重要，希望打印出’[INFO] call xxx()…’，有的函数不太重要，希望打印出’[DEBUG] call xxx()…’，这时，log函数本身就需要传入’INFO’或’DEBUG’这样的参数，类似这样：</p>
+<pre><code class="python">@log(&#39;DEBUG&#39;)
+def my_func():
+    pass</code></pre>
+<p>把上面的定义翻译成高阶函数的调用，就是：</p>
+<pre><code class="python">my_func = log(&#39;DEBUG&#39;)(my_func)</code></pre>
+<p>上面的语句看上去还是比较绕，再展开一下：</p>
+<pre><code class="python">log_decorator = log(&#39;DEBUG&#39;)
+my_func = log_decorator(my_func)</code></pre>
+<p>上面的语句又相当于：</p>
+<pre><code class="python">log_decorator = log(&#39;DEBUG&#39;)
+@log_decorator
+def my_func():
+    pass</code></pre>
+<p>所以，带参数的log函数首先返回一个decorator函数，再让这个decorator函数接收my_func并返回新函数：</p>
+<pre><code class="python">def log(prefix):
+    def log_decorator(f):
+        def wrapper(*args, **kw):
+            print &#39;[%s] %s()...&#39; % (prefix, f.__name__)
+            return f(*args, **kw)
+        return wrapper
+    return log_decorator
+
+@log(&#39;DEBUG&#39;)
+def test():
+    pass
+print test()</code></pre>
+<p>执行结果：</p>
+<pre><code class="text">[DEBUG] test()...
+None</code></pre>
+<p>对于这种3层嵌套的decorator定义，你可以先把它拆开：</p>
+<pre><code class="python"># 标准decorator:
+def log_decorator(f):
+    def wrapper(*args, **kw):
+        print &#39;[%s] %s()...&#39; % (prefix, f.__name__)
+        return f(*args, **kw)
+    return wrapper
+return log_decorator
+
+# 返回decorator:
+def log(prefix):
+    return log_decorator(f)</code></pre>
+<p>拆开以后会发现，调用会失败，因为在3层嵌套的decorator定义中，最内层的wrapper引用了最外层的参数prefix，所以，把一个闭包拆成普通的函数调用会比较困难。不支持闭包的编程语言要实现同样的功能就需要更多的代码。</p>
+<h2 id="偏函数"><a href="#偏函数" class="headerlink" title="偏函数"></a>偏函数</h2><p>当一个函数有很多参数时，调用者就需要提供多个参数。如果减少参数个数，就可以简化调用者的负担。</p>
+<p>functools.partial可以把一个参数多的函数变成一个参数少的新函数，少的参数需要在创建时指定默认值，这样，新函数调用的难度就降低了。</p>
+<h1 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h1><p>The pass statement<br>pass is a null operation — when it is executed, nothing happens. It is useful as a placeholder when a statement is required syntactically, but no code needs to be executed, for example:</p>
+<pre><code class="python">def f(arg): pass    # a function that does nothing (yet)
+class C: pass       # a class with no methods (yet)</code></pre>
+<h2 id="附录-Python-内置函数"><a href="#附录-Python-内置函数" class="headerlink" title="附录: Python 内置函数"></a>附录: Python 内置函数</h2><ol>
+<li><p>abs(v)<br>求绝对值</p>
+</li>
+<li><p>math.sqrt(v)<br>求平方根</p>
+</li>
+<li><p>map(f, L)<br>Python 内置的高阶函数，它接收一个函数 f 和一个 list，并通过把函数 f 依次作用在 list 的每个元素上，得到一个新的 list 并返回。<br>注意了 在py3中需要使用 list()转换map(), 例如 print(list(map(format_name, [‘adam’, ‘LISA’, ‘barT’]))</p>
+</li>
+<li><p>capitalize()</p>
+<p>首字母大写，其余全部小写</p>
+</li>
+<li><p>upper()</p>
+<p>全转换成大写</p>
+<p>lower()</p>
+<p>全转换成小写</p>
+</li>
+<li><p>title()</p>
+<p>标题首字大写，如”i love python”.title()  “I love python”</p>
+</li>
+<li><p>reduce(f, L)</p>
+<p>Python内置的一个高阶函数。reduce()函数接收的参数和 map()类似，一个函数 f，一个list，</p>
+<p>但行为和 map()不同，reduce()传入的函数 f 必须接收两个参数，reduce()对list的每个元素反复调用函数f，并返回最终结果值。</p>
+<p>reduce()还可以接收第3个可选参数，作为计算的初始值。</p>
+<p>python3中，要使用reduce,得从functools中引入，加上 from functools import reduce 才能够用。</p>
+</li>
+<li><p>filter(f, L)</p>
+<p>Python 内置的另一个有用的高阶函数，filter()函数接收一个函数 f 和一个list，这个函数 f 的作用是对每个元素进行判断，</p>
+<p>返回 True或 False，filter()根据判断结果自动过滤掉不符合条件的元素，返回由符合条件元素组成的新list。</p>
+</li>
+<li><p>str.strip(rm)</p>
+<p>删除 str 字符串中开头、结尾处的 rm 序列的字符。当rm为空时，默认删除空白符（包括’\n’, ‘\r’, ‘\t’, ‘ ‘)</p>
+</li>
+<li><p>int(v)</p>
+<p>截取整数部分</p>
+</li>
+<li><p>sorted(iterable[, cmp[, key[, reverse]]])</p>
+<p>Python 内置高阶函数,它可以接收一个比较函数来实现自定义排序，比较函数的定义是，传入两个待比较的元素 x, y，</p>
+<p>如果 x 应该排在 y 的前面，返回 -1，如果 x 应该排在 y 的后面，返回 1。如果 x 和 y 相等，返回 0。</p>
+</li>
+<li><p>cmp(x, y)</p>
+<p>比较函数</p>
+</li>
+</ol>
+<h2 id="与-Python3-不同之处"><a href="#与-Python3-不同之处" class="headerlink" title="与 Python3 不同之处"></a>与 Python3 不同之处</h2><ol>
+<li>python3里 / 结果是浮点数  // 结果是整数</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/10/python-basis/" rel="next" title="Python 编程基础(待整理)">
+                <i class="fa fa-chevron-left"></i> Python 编程基础(待整理)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/18/python-io/" rel="prev" title="Python IO">
+                Python IO <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Will Yang">
+          <p class="site-author-name" itemprop="name">Will Yang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Learning, Practising and Thinking</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yourdaisy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/cloudskyygl" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/cloudygl" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#函数式编程"><span class="nav-number">1.</span> <span class="nav-text">函数式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高阶函数"><span class="nav-number">2.</span> <span class="nav-text">高阶函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#闭包"><span class="nav-number">3.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#匿名函数"><span class="nav-number">4.</span> <span class="nav-text">匿名函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#装饰器"><span class="nav-number">5.</span> <span class="nav-text">装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#偏函数"><span class="nav-number">5.1.</span> <span class="nav-text">偏函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象"><span class="nav-number">6.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#附录-Python-内置函数"><span class="nav-number">6.1.</span> <span class="nav-text">附录: Python 内置函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与-Python3-不同之处"><span class="nav-number">6.2.</span> <span class="nav-text">与 Python3 不同之处</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will Yang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

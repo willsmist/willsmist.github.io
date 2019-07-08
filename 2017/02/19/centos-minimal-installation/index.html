@@ -1,0 +1,1017 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="记录最小化安装 CentOS、创建用户和配置以太网卡、SSH 公钥认证、防火墙规则等过程，以便查阅。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最小化安装 CentOS">
+<meta property="og:url" content="http://github.com/willsmist.github.io/2017/02/19/centos-minimal-installation/index.html">
+<meta property="og:site_name" content="半亩方塘">
+<meta property="og:description" content="记录最小化安装 CentOS、创建用户和配置以太网卡、SSH 公钥认证、防火墙规则等过程，以便查阅。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-08T21:09:19.789Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最小化安装 CentOS">
+<meta name="twitter:description" content="记录最小化安装 CentOS、创建用户和配置以太网卡、SSH 公钥认证、防火墙规则等过程，以便查阅。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://github.com/willsmist.github.io/2017/02/19/centos-minimal-installation/">
+
+
+
+
+
+  <title> 最小化安装 CentOS | 半亩方塘 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">半亩方塘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Will's Notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2017/02/19/centos-minimal-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Will Yang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半亩方塘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                最小化安装 CentOS
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-19T17:16:47+08:00">
+                2017-02-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/" itemprop="url" rel="index">
+                    <span itemprop="name">Technique</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录最小化安装 CentOS、创建用户和配置以太网卡、SSH 公钥认证、防火墙规则等过程，以便查阅。</p>
+<a id="more"></a>
+
+<hr>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>下载 <strong>CentOS-6.9-i386-minimal.iso</strong> 文件，以及用于验证该 ISO 文件的验证文件。</p>
+<p><strong>CentOS-6.9-i386-bin-DVD1.iso</strong> 也提供了 minimal 安装选择，其安装的软件包为229个, 而 <strong>CentOS-6.9-i386-minimal.iso</strong> 则安装204个软件包。</p>
+<p>文件验证方法可以参考: <a href="https://wiki.centos.org/TipsAndTricks/sha256sum" target="_blank" rel="noopener">https://wiki.centos.org/TipsAndTricks/sha256sum</a></p>
+<p>在 Windows 环境下，可以下载 <a href="http://www.labtestproject.com/files/win/sha256sum/sha256sum.exe" target="_blank" rel="noopener">sha256.exe</a> ，并将该程序和下载的 ISO 文件以及验证文件放在同一目录下,在 Windows 命令行工具中切换到它们所在的目录，执行命令：</p>
+<pre><code class="console">D:\Downloads&gt;sha256sum.exe -c sha256sum.txt</code></pre>
+<p>使用 <a href="https://rufus.akeo.ie/" target="_blank" rel="noopener">Rufus</a> 创建可引导USB闪存盘，在 <strong>创建一个启动盘</strong> 后面的下拉列表中选择 <strong>ISO 镜像</strong> 并点击后面的光盘形状的按钮，在打开的对话框里选择 <em>CentOS-6.9-i386-minimal.iso</em> ，点击开始等待完成即可。</p>
+<h1 id="安装-CentOS"><a href="#安装-CentOS" class="headerlink" title="安装 CentOS"></a>安装 CentOS</h1><p>安装过程简记如下：</p>
+<ul>
+<li><p>把 U 盘插入笔记本 USB 槽</p>
+</li>
+<li><p>开机启动，按下相应的功能键使之进入启动菜单选择界面，选择能从 U 盘启动的那一项</p>
+</li>
+<li><p>进入 CentOS 安装欢迎界面，选择 <strong>Install or upgrade an existing system</strong></p>
+</li>
+<li><p>Choose a Language - English</p>
+</li>
+<li><p>Keyboard Type - us</p>
+</li>
+<li><p>Installation Method - Hard drive</p>
+</li>
+<li><p>Select Partition - /dev/sda1</p>
+</li>
+<li><p>Next</p>
+</li>
+<li><p>What type of devices will your installation involve? - Basic Storage Devices</p>
+</li>
+<li><p>Hostname - [主机名]</p>
+</li>
+<li><p>Selected city - Asia/Shanghai</p>
+</li>
+<li><p>Root Password - [root 用户密码]<br>Confirm - [root 用户密码]</p>
+</li>
+<li><p>What type of installation would you like? - Create Custom Layout</p>
+</li>
+<li><p>分区</p>
+<ul>
+<li>/boot - 200MB</li>
+<li>swap - 4GB</li>
+<li>/home - 15GB</li>
+<li>/data - 20GB</li>
+<li>/ - 剩余</li>
+</ul>
+</li>
+<li><p><strong>Install boot loader on /dev/sda</strong> - <strong>修改 BIOS Driver Order 为</strong>(非常关键，否则可能不插U盘无法启动系统):</p>
+</li>
+</ul>
+<p>在本测试机器上安装时，sda 是 U 盘，sdb 是硬盘</p>
+<p>  First BIOS driver: sdb (硬盘)<br>  Second BIOS driver: sda (U盘)</p>
+<p>  此时，Install boot loader on <strong>/dev/sda</strong> 自动变为 Install boot loader on <strong>/dev/sdb</strong>，也就是将 boot loader 安装在硬盘上，而不是安装在U盘上。</p>
+<ul>
+<li><p>等待安装完成，最后重启</p>
+</li>
+<li><p>如果需要在客户机上使用 SSH 协议远程登录本 CentOS 系统，那么就需要获取密钥指纹。</p>
+</li>
+</ul>
+<h1 id="配置-CentOS"><a href="#配置-CentOS" class="headerlink" title="配置 CentOS"></a>配置 CentOS</h1><p>上面安装的 CentOS 是作为服务器系统使用的，所以接下来的配置主要是在另一台作为客户端的机器上远程登录服务器完成的，对于必须在服务器本地进行的操作已经明确注明。</p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><h3 id="以太网卡"><a href="#以太网卡" class="headerlink" title="以太网卡"></a>以太网卡</h3><p>本小节所有操作均在服务器本地执行</p>
+<p>修改文件 /etc/sysconfig/network-scripts/ifcfg-eth0，使之符合下面的配置:</p>
+<pre><code class="config">ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=192.168.1.10
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+DNS1=8.8.8.8
+DNS2=8.8.4.4
+IPV6INIT=no</code></pre>
+<h3 id="主机名-hostname-可选"><a href="#主机名-hostname-可选" class="headerlink" title="主机名 - hostname (可选)"></a>主机名 - hostname (可选)</h3><p>修改文件 /etc/sysconfig/network : HOSTNAME=your_host_name</p>
+<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><h3 id="初次登录"><a href="#初次登录" class="headerlink" title="初次登录"></a>初次登录</h3><p>在客户端机器的 shell 中执行下面的命令，以 root 用户身份远程通过 SSH 协议远程登录服务器</p>
+<pre><code class="console">$ ssh root@192.168.1.10
+The authenticity of host &#39;192.168.1.10 (192.168.1.10)&#39; can&#39;t be established.
+RSA key fingerprint is SHA256:b9GMyLNUZUCyMTR86H8Oezrj81SU1bxxKxDu3hZ3pmY.
+Are you sure you want to continue connecting (yes/no)?</code></pre>
+<p>如果上面输出的指纹与服务器公钥指纹相同，则输入 <em>yes</em> 继续，再输入密码即可登录成功；如果两个指纹不同，则输入 <em>no</em> 拒绝连接。</p>
+<p>这一步非常重要，只有确定了服务器的公钥是可信的，才能保证以后的通信安全</p>
+<h3 id="创建新用户"><a href="#创建新用户" class="headerlink" title="创建新用户"></a>创建新用户</h3><p>新建用户组、新建用户、设置密码和将用户添加到用户组的命令如下</p>
+<pre><code class="console"># useradd -m -d /home/will -s /bin/bash will
+# passwd will
+Changing password for user will.
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.</code></pre>
+<p>如果密码过于简单将会发出警告信息。</p>
+<p>设置 sudo 权限</p>
+<pre><code class="console"># visudo</code></pre>
+<p>在 <code>root    ALL=(ALL)       ALL</code> 这一行下面添加</p>
+<pre><code class="config">will    ALL=(ALL)       ALL</code></pre>
+<p>注：使用 <code>sudo -l</code> 可以查看当前用户的 sudo 权限，<code>sudo -l -U user</code> 查看指定用户。</p>
+<p>最后退出登录，使用刚刚创建的用户 will 登录，检查是否成功。此后 will 将作为服务器的管理员账户，接下来的任务都是以 will 用户的身份执行的。</p>
+<h3 id="SSH-公钥认证"><a href="#SSH-公钥认证" class="headerlink" title="SSH 公钥认证"></a>SSH 公钥认证</h3><p>假设客户端机器已有 SSH 密钥，其文件为 <code>~/.ssh/id_rsa</code> 和 <code>~/.ssh/id_rsa.pub</code>，在客户端 shell 执行下面的命令：</p>
+<pre><code class="console">$ cat ~/.ssh/id_rsa.pub | ssh will@192.168.1.10 &#39;mkdir -p .ssh &amp;&amp; cat - &gt;&gt; ~/.ssh/authorized_keys&#39;
+will@192.168.1.10&#39;s password:</code></pre>
+<p>上面这步也可以用 scp 把公钥文件 <code>id_rsa.pub</code> 上传到服务端机器上，以便以后设置 git 服务器使用。然后把 <code>id_rsa.pub</code> 的内容写入到 .ssh/authorized_keys 文件中。</p>
+<p>以 will 身份远程登录服务器，修改 <code>~/.ssh</code> 和 <code>~/.ssh/authorized_keys</code> 的权限</p>
+<pre><code class="console">$ chmod 700 ~/.ssh
+$ chmod 600 ~/.ssh/authorized_keys</code></pre>
+<p>修改服务器 SSH 配置文件 <code>/etc/ssh/sshd_config</code><br><strong>修改前先备份</strong></p>
+<pre><code class="config">Port 22
+
+Protocol 2
+
+PermitRootLogin no
+
+RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile      .ssh/authorized_keys
+
+PermitEmptyPasswords no
+PasswordAuthentication no
+
+UseDNS no</code></pre>
+<p>以上主要是禁止 root 用户登录和密码方式登录</p>
+<p>也可以在配置文件的末尾，指定允许登陆的用户</p>
+<pre><code class="config">AllowUsers will</code></pre>
+<p>重启 SSH 服务</p>
+<pre><code class="bash">$ sudo /etc/init.d/sshd restart
+Stopping sshd:                                             [  OK  ]
+Starting sshd:                                             [  OK  ]</code></pre>
+<p>登出服务器，再次远程登录则不需要输入密码，而且也不可能使用密码登录了，因为被禁止了。<br>所谓”公钥登录”，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求密码。</p>
+<p>下面的一步是可选的。在本机~/.ssh文件夹下创建config文件，内容如下。</p>
+<pre><code class="config">Host mist
+HostName 192.168.1.10
+User will
+Port 22</code></pre>
+<p>这样就可以简化命令了:</p>
+<pre><code class="console">$ ssh mist</code></pre>
+<h2 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h2><h3 id="从命令行"><a href="#从命令行" class="headerlink" title="从命令行"></a>从命令行</h3><p>参考 linux-note/iptables.md</p>
+<p>写一个配置防火墙的脚本，在服务器执行即可</p>
+<h3 id="从已有的规则文件"><a href="#从已有的规则文件" class="headerlink" title="从已有的规则文件"></a>从已有的规则文件</h3><p>下面是一个简单却能保证基本安全的防火墙规则文件的内容</p>
+<pre><code class="config"># Generated by iptables-save v1.4.7 on Wed Aug 23 03:13:40 2017
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [110:15439]
+:TCP - [0:0]
+:UDP - [0:0]
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+-A INPUT -p icmp -m icmp --icmp-type 8 -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -p udp -m conntrack --ctstate NEW -j UDP
+-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j TCP
+-A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+-A INPUT -p tcp -j REJECT --reject-with tcp-reset
+-A INPUT -j REJECT --reject-with icmp-proto-unreachable
+-A TCP -p tcp -m tcp --dport 22 -j ACCEPT
+-A UDP -p udp -m udp --dport 53 -j ACCEPT
+COMMIT
+# Completed on Wed Aug 23 03:13:40 2017</code></pre>
+<p>将已有规则文件中定义的防火墙规则应用到系统</p>
+<pre><code class="console">$ sudo iptables-restore &lt; iptables-rules</code></pre>
+<h3 id="永久生效"><a href="#永久生效" class="headerlink" title="永久生效"></a>永久生效</h3><pre><code class="console">$ sudo /etc/init.d/iptables save</code></pre>
+<p>或者</p>
+<pre><code class="console">$ sudo service iptables save</code></pre>
+<h2 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h2><h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><p>在 .bashrc 文件中重新定义 <code>ll</code> 的别名</p>
+<pre><code class="config"># User specific aliases and functions
+alias ll=&#39;ls -alF --color=auto&#39;</code></pre>
+<h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><h2 id="YUM"><a href="#YUM" class="headerlink" title="YUM"></a>YUM</h2><ul>
+<li><p>yum update &amp; yum upgrade</p>
+</li>
+<li><p>yum install man</p>
+</li>
+<li><p>yum install lrzsz</p>
+<p>可选，可使用 <code>sz</code> <code>rz</code> 与 XShell 进行文件传输</p>
+</li>
+</ul>
+<h2 id="从源码安装"><a href="#从源码安装" class="headerlink" title="从源码安装"></a>从源码安装</h2><ul>
+<li>安装编译环境</li>
+</ul>
+<pre><code class="console">$ sudo yum -y install gcc</code></pre>
+<ul>
+<li>创建自定义系统级别配置文件</li>
+</ul>
+<pre><code class="console">$ sudo touch /etc/profile.d/custom.sh</code></pre>
+<h3 id="Git-和-Gitolite"><a href="#Git-和-Gitolite" class="headerlink" title="Git 和 Gitolite"></a>Git 和 Gitolite</h3><p>Git 暂时由 <strong>sshd</strong> 进行认证(<strong>httpd</strong> 认证以后再研究)，通过 gitolite 进行授权。</p>
+<h4 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h4><pre><code class="console">$ sudo yum -y install dh-autoreconf curl-devel expat-devel gettext-devel openssl-devel perl-devel zlib-devel
+$ curl -O https://www.kernel.org/pub/software/scm/git/git-2.14.1.tar.gz
+$ tar zxvf git-2.14.1.tar.gz
+$ cd git-2.14.1
+$ ./configure --prefix=/usr/local/git
+$ make
+$ sudo make install
+$ /usr/local/git/bin/git version
+git version 2.14.1
+$ sudo vi /etc/profile.d/custom.sh
+$ exit
+logout
+Connection to 192.168.1.10 closed.
+$ ssh mist
+Last login: Mon Aug 28 00:55:42 2017 from 192.168.1.5
+$ git version
+git version 2.14.1</code></pre>
+<p>服务器上的 Git 无需设置 <code>user.name</code> 和 <code>user.email</code>。</p>
+<h4 id="安装-Gitolite"><a href="#安装-Gitolite" class="headerlink" title="安装 Gitolite"></a>安装 Gitolite</h4><ul>
+<li>将公钥上传至服务器，同时重命名</li>
+</ul>
+<pre><code class="console">$ scp ~/.ssh/id_rsa.pub will@mist:/tmp/steven.pub</code></pre>
+<ul>
+<li>安装和初始化</li>
+</ul>
+<pre><code class="console">$ sudo useradd -m -d /home/git -s /bin/bash git
+$ sudo passwd git
+$ su - git
+$ git clone https://github.com/sitaramc/gitolite
+$ mkdir $HOME/bin
+$ gitolite/install -ln
+$ gitolite setup -pk /tmp/steven.pub</code></pre>
+<p>  安装若出错 <code>Can&#39;t locate Data/Dumper.pm in @INC</code> ，执行</p>
+<pre><code class="bash"> sudo yum install &#39;perl(Data::Dumper)&#39;</code></pre>
+<p><strong>必须为 git 用户设置密码，否则只有 root 用户才能使用 <code>su - git</code> 切换到 git 用户</strong></p>
+<h4 id="Gitolite-授权"><a href="#Gitolite-授权" class="headerlink" title="Gitolite 授权"></a>Gitolite 授权</h4><p>克隆 gitolite-admin.git 仓库。</p>
+<pre><code class="bash">$ git clone user@gitserver:gitolite-admin.git
+$ cd gitolite-admin
+$ ls
+conf/  keydir/
+$ find conf
+conf
+conf/gitolite.conf
+$ find keydir/
+keydir/
+keydir/steven.pub</code></pre>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/18/python-io/" rel="next" title="Python IO">
+                <i class="fa fa-chevron-left"></i> Python IO
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/20/linux-user-management/" rel="prev" title="Linux 用户管理">
+                Linux 用户管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Will Yang">
+          <p class="site-author-name" itemprop="name">Will Yang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Learning, Practising and Thinking</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yourdaisy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/cloudskyygl" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/cloudygl" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-CentOS"><span class="nav-number">2.</span> <span class="nav-text">安装 CentOS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-CentOS"><span class="nav-number">3.</span> <span class="nav-text">配置 CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">3.1.</span> <span class="nav-text">网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以太网卡"><span class="nav-number">3.1.1.</span> <span class="nav-text">以太网卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主机名-hostname-可选"><span class="nav-number">3.1.2.</span> <span class="nav-text">主机名 - hostname (可选)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH"><span class="nav-number">3.2.</span> <span class="nav-text">SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初次登录"><span class="nav-number">3.2.1.</span> <span class="nav-text">初次登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新用户"><span class="nav-number">3.2.2.</span> <span class="nav-text">创建新用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH-公钥认证"><span class="nav-number">3.2.3.</span> <span class="nav-text">SSH 公钥认证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables"><span class="nav-number">3.3.</span> <span class="nav-text">iptables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从命令行"><span class="nav-number">3.3.1.</span> <span class="nav-text">从命令行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从已有的规则文件"><span class="nav-number">3.3.2.</span> <span class="nav-text">从已有的规则文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久生效"><span class="nav-number">3.3.3.</span> <span class="nav-text">永久生效</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间同步"><span class="nav-number">3.4.</span> <span class="nav-text">时间同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他配置"><span class="nav-number">3.5.</span> <span class="nav-text">其他配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装软件"><span class="nav-number">4.</span> <span class="nav-text">安装软件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#YUM"><span class="nav-number">4.1.</span> <span class="nav-text">YUM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从源码安装"><span class="nav-number">4.2.</span> <span class="nav-text">从源码安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-和-Gitolite"><span class="nav-number">4.2.1.</span> <span class="nav-text">Git 和 Gitolite</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Git"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">安装 Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Gitolite"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">安装 Gitolite</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gitolite-授权"><span class="nav-number">4.2.1.3.</span> <span class="nav-text">Gitolite 授权</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will Yang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

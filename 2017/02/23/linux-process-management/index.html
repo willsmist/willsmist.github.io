@@ -1,0 +1,1086 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Linux 进程学习笔记">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 进程管理">
+<meta property="og:url" content="http://github.com/willsmist.github.io/2017/02/23/linux-process-management/index.html">
+<meta property="og:site_name" content="半亩方塘">
+<meta property="og:description" content="Linux 进程学习笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-08T21:09:19.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 进程管理">
+<meta name="twitter:description" content="Linux 进程学习笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://github.com/willsmist.github.io/2017/02/23/linux-process-management/">
+
+
+
+
+
+  <title> Linux 进程管理 | 半亩方塘 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">半亩方塘</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Will's Notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2017/02/23/linux-process-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Will Yang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半亩方塘">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux 进程管理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-23T22:36:09+08:00">
+                2017-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/" itemprop="url" rel="index">
+                    <span itemprop="name">Technique</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technique/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Linux 进程学习笔记</p>
+<a id="more"></a>
+
+<hr>
+<h1 id="Linux-Process"><a href="#Linux-Process" class="headerlink" title="Linux Process"></a>Linux Process</h1><p>Processes carry out tasks within the operating system. A program is a set of machine code instructions and data stored in an executable image on disk and is, as such, a passive entity; a process can be thought of as a computer program in action.</p>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><p>As a process executes it changes state according to its circumstances. Linux processes have the following states:</p>
+<ul>
+<li><strong><em>Running</em></strong></li>
+</ul>
+<p>The process is either running (it is the current process in the system) or it is ready to run (it is waiting to be assigned to one of the system’s CPUs).</p>
+<ul>
+<li><strong><em>Waiting</em></strong></li>
+</ul>
+<p>The process is waiting for an event or for a resource. Linux differentiates between two types of waiting process; <strong>interruptible</strong> and <strong>uninterruptible</strong>. Interruptible waiting processes can be interrupted by signals whereas uninterruptible waiting processes are waiting directly on hardware conditions and cannot be interrupted under any circumstances.</p>
+<ul>
+<li><strong><em>Stopped</em></strong></li>
+</ul>
+<p>The process has been stopped, usually by receiving a signal. A process that is being debugged can be in a stopped state.</p>
+<ul>
+<li><strong><em>Zombie</em></strong></li>
+</ul>
+<p>This is a halted process which, for some reason, still has a <strong>task_struct</strong> data structure in the <strong>task vector</strong>. It is what it sounds like, a dead process.</p>
+<h3 id="Identifiers"><a href="#Identifiers" class="headerlink" title="Identifiers"></a>Identifiers</h3><p>Every process in the system has a process identifier. The process identifier is not an index into the <strong>task vector</strong>, it is simply a number. Each process also has User and group identifiers, these are used to control this processes access to the files and devices in the system.</p>
+<h3 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h3><p>In a Linux system no process is independent of any other process. Every process in the system, except the initial process has a parent process. New processes are not created, they are copied, or rather <strong>cloned</strong> from previous processes. Every <strong>task_struct</strong> representing a process keeps pointers to its parent process and to its siblings (those processes with the same parent process) as well as to its own child processes. You can see the family relationship between the running processes in a Linux system using the <strong>pstree</strong> command:</p>
+<pre><code># pstree -pu
+init(1)─┬─auditd(1338)───{auditd}(1339)
+        ├─crond(1495)
+        ├─master(1481)─┬─pickup(1491,postfix)
+        │              └─qmgr(1492,postfix)
+        ├─mingetty(1521)
+        ├─mingetty(1523)
+        ├─mingetty(1525)
+        ├─mingetty(1527)
+        ├─mingetty(1529)
+        ├─mingetty(1536)
+        ├─rsyslogd(1360)─┬─{rsyslogd}(1361)
+        │                ├─{rsyslogd}(1362)
+        │                └─{rsyslogd}(1363)
+        ├─sshd(1401)───sshd(1557)───bash(1561)───pstree(1615)
+        └─udevd(604)─┬─udevd(1535)
+                     └─udevd(1537)</code></pre><p>Additionally all of the processes in the system are held in a doubly linked list whose root is the init processes <strong>task_struct</strong> data structure. This list allows the Linux kernel to look at every process in the system. It needs to do this to provide support for commands such as ps or kill</p>
+<h3 id="Times-and-Timers"><a href="#Times-and-Timers" class="headerlink" title="Times and Timers"></a>Times and Timers</h3><p>The kernel keeps track of a processes creation time as well as the CPU time that it consumes during its lifetime. Each clock tick, the kernel updates the amount of time in <strong>jiffies</strong> that the current process has spent in system and in user mode. Linux also supports process specific <strong>interval</strong> timers, processes can use system calls to set up timers to send signals to themselves when the timers expire. These timers can be single-shot or periodic timers.</p>
+<h2 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h2><h3 id="ps-report-a-snapshot-of-the-current-processes"><a href="#ps-report-a-snapshot-of-the-current-processes" class="headerlink" title="ps - report a snapshot of the current processes"></a>ps - report a snapshot of the current processes</h3><p><strong><em>ps [options]</em></strong></p>
+<p><strong>ps</strong> displays information about a selection of the active processes. If you want a repetitive update of the selection and the displayed information, use top(1) instead.</p>
+<p>This version of ps accepts several kinds of options:<br>       1   UNIX options, which may be grouped and must be preceded by a dash.<br>       2   BSD options, which may be grouped and must not be used with a dash.<br>       3   GNU long options, which are preceded by two dashes.</p>
+<p>Options of different types may be freely mixed, but conflicts can appear. There are some synonymous options, which are functionally identical, due to the many standards and ps implementations that this ps is compatible with.</p>
+<p>EXAMPLES<br>       To see every process on the system using standard syntax:<br>          ps -e<br>          ps -ef<br>          ps -eF<br>          ps -ely</p>
+<pre><code>   To see every process on the system using BSD syntax:
+      ps ax
+      ps axu
+
+   To print a process tree:
+      ps -ejH
+      ps axjf</code></pre><ul>
+<li><p><strong>a</strong> option causes ps to list all processes with a terminal (tty), or to list all processes when used together with the <strong>x</strong> option.</p>
+</li>
+<li><p><strong>x</strong> option causes ps to list all processes owned by you (same EUID as ps), or to list all processes when used together with the <strong>a</strong> option.</p>
+</li>
+<li><p><strong>u</strong> output format control option. display user-oriented format.</p>
+</li>
+<li><p><strong>j</strong> BSD job control format</p>
+</li>
+<li><p><strong>f</strong> ASCII-art process hierarchy (forest)</p>
+</li>
+<li><p><strong>-e</strong>  Select all processes. Identical to -A.</p>
+</li>
+<li><p><strong>-f</strong> does full-format listing. This option can be combined with many other UNIX-style options to add additional columns. It also causes the command arguments to be printed. When used with -L, the NLWP (number of threads) and LWP (thread ID) columns will be added. See the c option, the format keyword args, and the format keyword comm.</p>
+</li>
+<li><p><strong>-F</strong> extra full format. See the -f option, which -F implies.</p>
+</li>
+<li><p><strong>-l</strong> long format. The <strong>-y</strong> option is often useful with this.</p>
+</li>
+<li><p><strong>-y</strong> Do not show flags; show rss in place of addr. This option can only be used with <strong>-l</strong>.</p>
+</li>
+<li><p><strong>-j</strong> jobs format</p>
+</li>
+<li><p><strong>-H</strong> show process hierarchy (forest)</p>
+</li>
+</ul>
+<h3 id="pstree-display-a-tree-of-processes"><a href="#pstree-display-a-tree-of-processes" class="headerlink" title="pstree - display a tree of processes"></a>pstree - display a tree of processes</h3><p><strong><em>pstree [options] [pid]|[user]</em></strong></p>
+<p>pstree shows running processes as a tree. The tree is rooted  at  either pid  or init if pid is omitted. If a user name is specified, all process trees rooted at processes owned by that user are shown.</p>
+<ul>
+<li><p><strong>-p</strong>     Show PIDs. PIDs are shown as decimal numbers in parentheses after each process name. -p implicitly disables compaction.</p>
+</li>
+<li><p><strong>-u</strong>     Show uid transitions(转变). Whenever the uid of a process differs  from the  uid of its parent, the new uid is shown in parentheses after the process name.</p>
+</li>
+<li><p><strong>-a</strong>     Show command line arguments. If the command line of a process  is swapped  out, that process is shown in parentheses. -a implicitly disables compaction.</p>
+</li>
+<li><p><strong>-h</strong>     Highlight  the current process and its ancestors. This is a no-op if the terminal doesn’t support highlighting or  if  neither  the current process nor any of its ancestors are in the subtree being shown.</p>
+</li>
+<li><p><strong>-H</strong>     Like -h, but highlight the specified process instead. Unlike with -h,  pstree fails when using -H if highlighting is not available.</p>
+</li>
+<li><p><strong>-n</strong>     Sort processes with the same ancestor by PID instead of by  name.(Numeric sort.)</p>
+</li>
+</ul>
+<h3 id="top-display-Linux-tasks"><a href="#top-display-Linux-tasks" class="headerlink" title="top - display Linux tasks"></a>top - display Linux tasks</h3><p><strong><em>top -hv | -abcHimMsS -d delay -n iterations -p pid [, pid …]</em></strong></p>
+<p>The  top  program provides a dynamic real-time view of a running system. It can display system summary information as well as  a  list  of  tasks currently  being  managed by the Linux kernel.</p>
+<h2 id="w-Show-who-is-logged-on-and-what-they-are-doing"><a href="#w-Show-who-is-logged-on-and-what-they-are-doing" class="headerlink" title="w - Show who is logged on and what they are doing"></a>w - Show who is logged on and what they are doing</h2><p><strong><em>w - [husfiV] [user]</em></strong></p>
+<p>w  displays  information about the users currently on the machine, and their processes.  The header shows, in this order,  the current time, how long the system has been running, how many users are currently logged on, and the system load averages for the past 1, 5, and 15 minutes.</p>
+<p>The following entries are displayed for each user: login name, the tty name, the remote host, login time, idle time, JCPU, PCPU, and the command line of their  current process.</p>
+<p>The  JCPU time is the time used by all processes attached to the tty.  It does not include past background jobs, but does include currently running background jobs.</p>
+<p>The PCPU time is the time used by the current process, named in the “what” field.</p>
+<h2 id="杀死进程"><a href="#杀死进程" class="headerlink" title="杀死进程"></a>杀死进程</h2><h3 id="kill-terminate-a-process"><a href="#kill-terminate-a-process" class="headerlink" title="kill - terminate a process"></a>kill - terminate a process</h3><p><strong><em>kill [-s signal|-p] [–] pid…<br>       kill -l [signal]</em></strong></p>
+<p>The  command kill sends the specified signal to the specified process or process group.  If no signal is specified, the TERM signal is sent.  The TERM  signal  will  kill  processes which do not catch this signal.  For other processes, it may be necessary to use the KILL (9)  signal,  since this signal cannot be caught.</p>
+<ul>
+<li><p><strong>pid…</strong> Specify the list of processes that kill should signal.  Each pid can be one of five things:</p>
+<pre><code>        n      where n is larger than 0.  The process with pid n will be signaled.
+
+        0      All processes in the current process group are signaled.
+
+        -1     All processes with pid larger than 1 will be signaled.
+
+        -n     where  n  is  larger  than 1.  All processes in process group n are signaled.  When an argument of the form ‘-n’ is given, and it is meant to denote a process group, either the signal must be specified first, or the argument must be preceded by a ‘--’ option, otherwise it will be taken as the  signal to send.</code></pre></li>
+<li><p><strong>-s signal</strong>   Specify the signal to send.  The signal may be given as a signal name or number.</p>
+</li>
+<li><p><strong>-l</strong>     Print a list of signal names.  These are found in /usr/include/linux/signal.h</p>
+</li>
+</ul>
+<pre><code># kill -l
+ 1) SIGHUP     2) SIGINT     3) SIGQUIT     4) SIGILL     5) SIGTRAP
+ 6) SIGABRT     7) SIGBUS     8) SIGFPE     9) SIGKILL    10) SIGUSR1
+11) SIGSEGV    12) SIGUSR2    13) SIGPIPE    14) SIGALRM    15) SIGTERM
+16) SIGSTKFLT    17) SIGCHLD    18) SIGCONT    19) SIGSTOP    20) SIGTSTP
+21) SIGTTIN    22) SIGTTOU    23) SIGURG    24) SIGXCPU    25) SIGXFSZ
+26) SIGVTALRM    27) SIGPROF    28) SIGWINCH    29) SIGIO    30) SIGPWR
+31) SIGSYS    34) SIGRTMIN    35) SIGRTMIN+1    36) SIGRTMIN+2    37) SIGRTMIN+3
+38) SIGRTMIN+4    39) SIGRTMIN+5    40) SIGRTMIN+6    41) SIGRTMIN+7    42) SIGRTMIN+8
+43) SIGRTMIN+9    44) SIGRTMIN+10    45) SIGRTMIN+11    46) SIGRTMIN+12    47) SIGRTMIN+13
+48) SIGRTMIN+14    49) SIGRTMIN+15    50) SIGRTMAX-14    51) SIGRTMAX-13    52) SIGRTMAX-12
+53) SIGRTMAX-11    54) SIGRTMAX-10    55) SIGRTMAX-9    56) SIGRTMAX-8    57) SIGRTMAX-7
+58) SIGRTMAX-6    59) SIGRTMAX-5    60) SIGRTMAX-4    61) SIGRTMAX-3    62) SIGRTMAX-2
+63) SIGRTMAX-1    64) SIGRTMAX
+
+# kill -l 15
+TERM
+
+# kill -l KILL
+9
+</code></pre><h3 id="killall-kill-processes-by-name"><a href="#killall-kill-processes-by-name" class="headerlink" title="killall - kill processes by name"></a>killall - kill processes by name</h3><p><strong><em>killall [-Z,–context pattern] [-e,–exact] [-g,–process-group] [-i,–interactive] [-q,–quiet] [-r,–regexp] [-s,–signal signal] [-u,–user user] [-v,–verbose]<br>       [-w,–wait] [-I,–ignore-case] [-V,–version] [–] name …</em></strong></p>
+<p><strong><em>killall -l</em></strong></p>
+<p>killall sends a signal to all processes running any of the specified commands. If no signal name is specified, SIGTERM is sent.</p>
+<p>Signals can be specified either by name (e.g. -HUP or -SIGHUP ) or by number (e.g. -1) or by option -s.</p>
+<p>If the command name is not regular expression (option -r) and contains a slash (/), processes executing that particular file will be selected for killing, independent of their name.</p>
+<p>killall  returns a zero return code if at least one process has been killed for each listed command, or no commands were listed and at least one process matched the -u and -Z search criteria. killall returns non-zero otherwise.</p>
+<p>A killall process never kills itself (but may kill other killall processes).</p>
+<p>OPTIONS<br>       -e, –exact<br>              Require an exact match for very long names. If a command name is longer than 15 characters, the full name may be unavailable (i.e. it  is  swapped  out).  In<br>              this  case,  killall  will kill everything that matches within the first 15 characters. With -e, such entries are skipped.  killall prints a message for each<br>              skipped entry if -v is specified in addition to -e,</p>
+<pre><code>   -I, --ignore-case
+          Do case insensitive process name match.
+
+   -g, --process-group
+          Kill the process group to which the process belongs. The kill signal is only sent once per group, even if multiple processes belonging to  the  same  process
+          group were found.
+
+   -i, --interactive
+          Interactively ask for confirmation before killing.
+
+   -l, --list
+          List all known signal names.
+
+   -q, --quiet
+          Do not complain if no processes were killed.
+
+   -r, --regexp
+          Interpret process name pattern as an extended regular expression.
+
+   -s, --signal
+          Send this signal instead of SIGTERM.
+
+   -u, --user
+          Kill only processes the specified user owns. Command names are optional.
+
+   -v, --verbose
+          Report if the signal was successfully sent.
+
+   -V, --version
+          Display version information.
+
+   -w, --wait
+          Wait for all killed processes to die. killall checks once per second if any of the killed processes still exist and only returns if none are left.  Note that
+          killall may wait forever if the signal was ignored, had no effect, or if the process stays in zombie state.
+
+   -Z, --context
+          (SELinux Only) Specify security context: kill only processes having security context that match with given expended regular expression pattern. Must  precede
+          other arguments on the command line. Command names are optional.</code></pre><h3 id="pgrep-pkill-look-up-or-signal-processes-based-on-name-and-other-attributes"><a href="#pgrep-pkill-look-up-or-signal-processes-based-on-name-and-other-attributes" class="headerlink" title="pgrep, pkill - look up or signal processes based on name and other attributes"></a>pgrep, pkill - look up or signal processes based on name and other attributes</h3><p>SYNOPSIS</p>
+<pre><code>   pgrep [-flvx] [-d delimiter] [-n|-o] [-P ppid,...] [-g pgrp,...]
+        [-s sid,...] [-u euid,...] [-U uid,...] [-G gid,...]
+        [-t term,...] [pattern]
+
+   pkill [-signal] [-fvx] [-n|-o] [-P ppid,...] [-g pgrp,...]
+        [-s sid,...] [-u euid,...] [-U uid,...] [-G gid,...]
+        [-t term,...] [pattern]</code></pre><p>DESCRIPTION</p>
+<pre><code>   pgrep  looks through the currently running processes and lists the process IDs which matches the selection criteria to stdout.  All the criteria have to match.  For example,
+
+   pgrep -u root sshd
+
+   will only list the processes called sshd AND owned by root.  On the other hand,
+
+   pgrep -u root,daemon
+
+   will list the processes owned by root OR daemon.
+
+   pkill will send the specified signal (by default SIGTERM) to each process instead of listing them on stdout.</code></pre><p>OPTIONS</p>
+<pre><code>   -d delimiter
+
+          Sets the string used to delimit each process ID in the output (by default a newline).  (pgrep only.)
+
+   -f     The pattern is normally only matched against the process name.  When -f is set, the full command line is used.
+
+   -g pgrp,...
+
+          Only match processes in the process group IDs listed.  Process group 0 is translated into pgrep’s or pkill’s own process group.
+
+   -G gid,...
+          Only match processes whose real group ID is listed.  Either the numerical or symbolical value may be used.
+
+   -l     List the process name as well as the process ID. (pgrep only.)
+
+   -n     Select only the newest (most recently started) of the matching processes.
+
+   -o     Select only the oldest (least recently started) of the matching processes.
+
+   -P ppid,...
+          Only match processes whose parent process ID is listed.
+
+   -s sid,...
+          Only match processes whose process session ID is listed.  Session ID 0 is translated into pgrep’s or pkill’s own session ID.
+
+   -t term,...
+          Only match processes whose controlling terminal is listed.  The terminal name should be specified without the &quot;/dev/&quot; prefix.
+
+   -u euid,...
+          Only match processes whose effective user ID is listed.  Either the numerical or symbolical value may be used.
+
+   -U uid,...
+          Only match processes whose real user ID is listed.  Either the numerical or symbolical value may be used.
+
+   -v     Negates the matching.
+
+   -x     Only match processes whose name (or command line if -f is specified) exactly match the pattern.
+
+   -signal
+          Defines the signal to send to each matched process.  Either the numeric or the symbolic signal name can be used.  (pkill only.)</code></pre><p>OPERANDS<br>       pattern<br>              Specifies an Extended Regular Expression for matching against the process names or command lines.</p>
+<p>EXAMPLES<br>       Example 1: Find the process ID of the named daemon:</p>
+<pre><code>   unix$ pgrep -u root named
+
+   Example 2: Make syslog reread its configuration file:
+
+   unix$ pkill -HUP syslogd
+
+   Example 3: Give detailed information on all xterm processes:
+
+   unix$ ps -fp $(pgrep -d, -x xterm)
+
+   Example 4: Make all netscape processes run nicer:
+
+   unix$ renice +4 ‘pgrep netscape‘</code></pre><p>EXIT STATUS<br>       0      One or more processes matched the criteria.</p>
+<pre><code>   1      No processes matched.
+
+   2      Syntax error in the command line.
+
+   3      Fatal error: out of memory etc.</code></pre><p>NOTES<br>       The process name used for matching is limited to the 15 characters present in the output of /proc/pid/stat.  Use the -f option to match against the complete command line, /proc/pid/cmdline.</p>
+<pre><code>   The running pgrep or pkill process will never report itself as a match.</code></pre><p>通过 -t 选项剔除某个用户：</p>
+<pre><code># pkill -9 -t pts/1</code></pre><h2 id="进程优先级"><a href="#进程优先级" class="headerlink" title="进程优先级"></a>进程优先级</h2><h3 id="查看进程优先级"><a href="#查看进程优先级" class="headerlink" title="查看进程优先级"></a>查看进程优先级</h3><p>ps 命令的 -el 选项可查看进程优先级：</p>
+<pre><code># ps -el
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+4 S     0     1     0  0  80   0 -   726 -      ?        00:00:01 init
+1 S     0     2     0  0  80   0 -     0 -      ?        00:00:00 kthreadd
+1 S     0     3     2  0 -40   - -     0 -      ?        00:00:00 migration/0
+1 S     0     4     2  0  80   0 -     0 -      ?        00:00:00 ksoftirqd/0
+1 S     0     5     2  0 -40   - -     0 -      ?        00:00:00 stopper/0
+1 S     0     6     2  0 -40   - -     0 -      ?        00:00:00 watchdog/0
+1 S     0     7     2  0 -40   - -     0 -      ?        00:00:00 migration/1
+1 S     0     8     2  0 -40   - -     0 -      ?        00:00:00 stopper/1
+1 S     0     9     2  0  80   0 -     0 -      ?        00:00:00 ksoftirqd/1
+1 S     0    10     2  0 -40   - -     0 -      ?        00:00:00 watchdog/1
+5 S     0    11     2  0  80   0 -     0 -      ?        00:00:00 events/0
+1 S     0    12     2  0  80   0 -     0 -      ?        00:00:03 events/1
+1 S     0    13     2  0  80   0 -     0 -      ?        00:00:00 events/0
+1 S     0    14     2  0  80   0 -     0 -      ?        00:00:00 events/1
+1 S     0    15     2  0  80   0 -     0 -      ?        00:00:00 events_long/0
+1 S     0    16     2  0  80   0 -     0 -      ?        00:00:00 events_long/1
+1 S     0    17     2  0  80   0 -     0 -      ?        00:00:00 events_power_ef
+1 S     0    18     2  0  80   0 -     0 -      ?        00:00:00 events_power_ef</code></pre><p>PRI(Priority) 和 NI(Niceness) 都表示优先级，数字越小表示该进程的优先级越高，用户不能修改 PRI，只能修改 NI 的值。</p>
+<p>PRI (最终值) = PRI(原始值) + NI</p>
+<p>NI 值的范围是 -20 到 19，普通用户调整 NI 的范围是 0 到 19，而且只能调高 NI 不能减低。<br>只有 root 用户才能设定进程 NI 为负值，而且可以调整任何用户的进程。</p>
+<h3 id="修改进程优先级"><a href="#修改进程优先级" class="headerlink" title="修改进程优先级"></a>修改进程优先级</h3><p>nice - run a program with modified scheduling priority</p>
+<p><strong><em>nice [OPTION] [COMMAND [ARG]…]</em></strong></p>
+<p>Run  COMMAND  with  an adjusted niceness, which affects process scheduling.  With no COMMAND, print the current niceness.  Nicenesses range from -20 (most favorable scheduling) to 19 (least favorable).</p>
+<pre><code>-n, --adjustment=N
+    add integer N to the niceness (default 10)</code></pre><p>NOTE: your shell may have its own version of nice, which usually supersedes the version described here.  Please refer to  your  shell’s  documentation  for  details about the options it supports.</p>
+<h2 id="后台进程管理"><a href="#后台进程管理" class="headerlink" title="后台进程管理"></a>后台进程管理</h2><p>jobs<br>fg<br>bg<br>ctrl+z<br>&amp; - 终端关闭，进程终止<br>nohup COMMAND &amp; - 终端关闭，进程后台继续运行，程序的输出到 nohup.out 文件</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.tldp.org/LDP/tlk/kernel/processes.html" target="_blank" rel="noopener">Chapter 4 Processes</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/linux-file-permissions/" rel="next" title="Linux 文件权限">
+                <i class="fa fa-chevron-left"></i> Linux 文件权限
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/24/regular-expression/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Will Yang">
+          <p class="site-author-name" itemprop="name">Will Yang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Learning, Practising and Thinking</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yourdaisy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/cloudskyygl" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/cloudygl" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-Process"><span class="nav-number">1.</span> <span class="nav-text">Linux Process</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#State"><span class="nav-number">1.1.</span> <span class="nav-text">State</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Identifiers"><span class="nav-number">1.1.1.</span> <span class="nav-text">Identifiers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Links"><span class="nav-number">1.1.2.</span> <span class="nav-text">Links</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Times-and-Timers"><span class="nav-number">1.1.3.</span> <span class="nav-text">Times and Timers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看进程"><span class="nav-number">1.2.</span> <span class="nav-text">查看进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-report-a-snapshot-of-the-current-processes"><span class="nav-number">1.2.1.</span> <span class="nav-text">ps - report a snapshot of the current processes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pstree-display-a-tree-of-processes"><span class="nav-number">1.2.2.</span> <span class="nav-text">pstree - display a tree of processes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top-display-Linux-tasks"><span class="nav-number">1.2.3.</span> <span class="nav-text">top - display Linux tasks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w-Show-who-is-logged-on-and-what-they-are-doing"><span class="nav-number">1.3.</span> <span class="nav-text">w - Show who is logged on and what they are doing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杀死进程"><span class="nav-number">1.4.</span> <span class="nav-text">杀死进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kill-terminate-a-process"><span class="nav-number">1.4.1.</span> <span class="nav-text">kill - terminate a process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#killall-kill-processes-by-name"><span class="nav-number">1.4.2.</span> <span class="nav-text">killall - kill processes by name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pgrep-pkill-look-up-or-signal-processes-based-on-name-and-other-attributes"><span class="nav-number">1.4.3.</span> <span class="nav-text">pgrep, pkill - look up or signal processes based on name and other attributes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程优先级"><span class="nav-number">1.5.</span> <span class="nav-text">进程优先级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看进程优先级"><span class="nav-number">1.5.1.</span> <span class="nav-text">查看进程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改进程优先级"><span class="nav-number">1.5.2.</span> <span class="nav-text">修改进程优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台进程管理"><span class="nav-number">1.6.</span> <span class="nav-text">后台进程管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.7.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will Yang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
