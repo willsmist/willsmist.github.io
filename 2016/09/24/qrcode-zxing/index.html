@@ -98,7 +98,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0">
 
 
 
@@ -113,13 +113,13 @@
 <meta property="og:site_name" content="半亩方塘">
 <meta property="og:description" content="ZXing 是来自 Google 的条形码处理类库，本文演示如何在 Java 程序中使用 ZXing 生成和解析条形码，并根据 JavaDocs 对部分接口和类进行说明。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://github.com/images/barcode/zxing-horse.png">
-<meta property="og:image" content="http://github.com/images/barcode/will.png">
-<meta property="og:updated_time" content="2019-07-11T01:32:00.620Z">
+<meta property="og:image" content="https://i.ibb.co/smVqtqW/zxing-horse.png">
+<meta property="og:image" content="https://i.ibb.co/zrg0Vdx/will.png">
+<meta property="og:updated_time" content="2019-07-11T21:35:43.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ZXing - Java 生成和解析 QR Code">
 <meta name="twitter:description" content="ZXing 是来自 Google 的条形码处理类库，本文演示如何在 Java 程序中使用 ZXing 生成和解析条形码，并根据 JavaDocs 对部分接口和类进行说明。">
-<meta name="twitter:image" content="http://github.com/images/barcode/zxing-horse.png">
+<meta name="twitter:image" content="https://i.ibb.co/smVqtqW/zxing-horse.png">
 
 
 
@@ -412,7 +412,7 @@
 <a id="more"></a>
 
 <hr>
-<h1 id="ZXing-是什么"><a href="#ZXing-是什么" class="headerlink" title="ZXing 是什么"></a>ZXing 是什么</h1><p><img src="/images/barcode/zxing-horse.png" alt></p>
+<h1 id="ZXing-是什么"><a href="#ZXing-是什么" class="headerlink" title="ZXing 是什么"></a>ZXing 是什么</h1><p><img src="https://i.ibb.co/smVqtqW/zxing-horse.png" alt></p>
 <p><a href="https://github.com/zxing/zxing"><strong>ZXing</strong></a> (“Zebra Crossing”) 是一个开源并支持多种格式的一维/二维条形码图像处理类库，基于 Java 实现。</p>
 <p>ZXing 支持的格式：</p>
 <table>
@@ -490,7 +490,7 @@
     }
 }</code></pre>
 <p>执行的结果如下，扫描即可访问本博客。</p>
-<p><img src="/images/barcode/will.png" alt></p>
+<p><img src="https://i.ibb.co/zrg0Vdx/will.png" alt></p>
 <p>除了定义所需的参数外，生成条形码的代码只需要调用 MultiFormatWriter 的 encode 方法。</p>
 <h2 id="MultiFormatWriter"><a href="#MultiFormatWriter" class="headerlink" title="MultiFormatWriter"></a>MultiFormatWriter</h2><p>com.google.zxing.MultiFormatWriter 是一个工厂类,根据 com.google.zxing.BarcodeFormat 寻找合适的 com.google.zxing.Writer 接口实现类,并对提供的内容编码到条形码中。</p>
 <p><strong>encode</strong> 方法的定义如下：</p>
