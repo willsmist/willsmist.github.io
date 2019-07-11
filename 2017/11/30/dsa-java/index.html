@@ -105,17 +105,17 @@
 
 
 
-<meta name="description" content="graph LR     定长数组---栈     单向链表---栈 graph LR     循环数组---队列     单向链表---队列     双向链表---双端队列 graph LR     定长数组---向量     可扩展数组---向量 graph LR     双向链表---列表 graph LR     栈---序列     队列---序列     双端队列---序列     向">
+<meta name="description" content="在学习邓俊辉所写 《数据结构与算法》 (Java描述)时，记下一些内容以便参考。 持续更新中…">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="http://github.com/willsmist.github.io/2017/11/30/test/index.html">
+<meta property="og:title" content="《数据结构与算法》 (Java描述) 学习笔记">
+<meta property="og:url" content="http://github.com/willsmist.github.io/2017/11/30/dsa-java/index.html">
 <meta property="og:site_name" content="半亩方塘">
-<meta property="og:description" content="graph LR     定长数组---栈     单向链表---栈 graph LR     循环数组---队列     单向链表---队列     双向链表---双端队列 graph LR     定长数组---向量     可扩展数组---向量 graph LR     双向链表---列表 graph LR     栈---序列     队列---序列     双端队列---序列     向">
+<meta property="og:description" content="在学习邓俊辉所写 《数据结构与算法》 (Java描述)时，记下一些内容以便参考。 持续更新中…">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-08T21:09:19.799Z">
+<meta property="og:updated_time" content="2019-07-11T01:17:53.489Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="test">
-<meta name="twitter:description" content="graph LR     定长数组---栈     单向链表---栈 graph LR     循环数组---队列     单向链表---队列     双向链表---双端队列 graph LR     定长数组---向量     可扩展数组---向量 graph LR     双向链表---列表 graph LR     栈---序列     队列---序列     双端队列---序列     向">
+<meta name="twitter:title" content="《数据结构与算法》 (Java描述) 学习笔记">
+<meta name="twitter:description" content="在学习邓俊辉所写 《数据结构与算法》 (Java描述)时，记下一些内容以便参考。 持续更新中…">
 
 
 
@@ -143,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://github.com/willsmist.github.io/2017/11/30/test/">
+  <link rel="canonical" href="http://github.com/willsmist.github.io/2017/11/30/dsa-java/">
 
 
 
 
 
-  <title> test | 半亩方塘 </title>
+  <title> 《数据结构与算法》 (Java描述) 学习笔记 | 半亩方塘 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -288,7 +288,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2017/11/30/test/">
+    <link itemprop="mainEntityOfPage" href="http://github.com/willsmist.github.io/2017/11/30/dsa-java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Will Yang">
@@ -309,7 +309,7 @@
             
             
               
-                test
+                《数据结构与算法》 (Java描述) 学习笔记
               
             
           </h1>
@@ -360,24 +360,85 @@
       
 
       
-        <pre><code class="mermaid">graph LR
+        <p>在学习邓俊辉所写 《数据结构与算法》 (Java描述)时，记下一些内容以便参考。</p>
+<p>持续更新中…</p>
+<a id="more"></a>
+
+<h2 id="基本数据结构一览"><a href="#基本数据结构一览" class="headerlink" title="基本数据结构一览"></a>基本数据结构一览</h2><pre class="mermaid">graph LR
     定长数组---栈
-    单向链表---栈</code></pre>
-<pre><code class="mermaid">graph LR
+    单向链表---栈</pre>
+
+<pre class="mermaid">graph LR
     循环数组---队列
     单向链表---队列
-    双向链表---双端队列</code></pre>
-<pre><code class="mermaid">graph LR
+    双向链表---双端队列</pre>
+
+<pre class="mermaid">graph LR
     定长数组---向量
-    可扩展数组---向量</code></pre>
-<pre><code class="mermaid">graph LR
-    双向链表---列表</code></pre>
-<pre><code class="mermaid">graph LR
+    可扩展数组---向量</pre>
+
+<pre class="mermaid">graph LR
+    双向链表---列表</pre>
+
+<pre class="mermaid">graph LR
     栈---序列
     队列---序列
     双端队列---序列
     向量---序列
-    列表---序列</code></pre>
+    列表---序列</pre>
+
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>本文中对 <strong>声明</strong> 和 <strong>定义</strong> 两个术语的使用参考 StackOverflow 上对于问题 <a href="https://stackoverflow.com/questions/11715485/what-is-the-difference-between-declaration-and-definition-in-java" target="_blank" rel="noopener">What is the difference between declaration and definition in Java?</a> 的第一个回答中关于 <strong>方法</strong> 的声明和定义的区别。而对于类和变量，本文仅使用定义。</p>
+<p>具体使用总结为下面的例子:</p>
+<pre><code class="java">abstract class SomeClass {                // class declaration
+                                          //                          \
+    int x;                                // variable declaration      |
+                                          //                           |
+    public abstract void someMethod();    // function declaration      |
+                                          //                           |
+    public int someOtherMethod() {        // function declaration      |
+                                          //                           | class
+        if (Math.random() &gt; .5)           // \                         | definition
+            return x;                     //  |  function definition   |
+        else                              //  |                        |
+            return -x;                    // /                         |
+                                          //                           |
+    }                                     //                           |
+}                                                                     /</code></pre>
+<h2 id="ADT-定义"><a href="#ADT-定义" class="headerlink" title="ADT 定义"></a>ADT 定义</h2><ul>
+<li><p>定义 ADT 接口</p>
+<ul>
+<li>声明 ADT 接口所支持的方法</li>
+</ul>
+</li>
+<li><p>定义相应的异常类</p>
+<ul>
+<li>根据方法可能出现的异常，在 ADT 接口的方法声明中使用 throws 声明所抛出的异常</li>
+</ul>
+</li>
+</ul>
+<h2 id="ADT-实现类"><a href="#ADT-实现类" class="headerlink" title="ADT 实现类"></a>ADT 实现类</h2><p>需要注意的细节</p>
+<ul>
+<li><p>某些成员变量和方法需要用 protected 修饰，使之能被扩展，但实现的接口中的方法都是 public</p>
+</li>
+<li><p>需要遍历的方法不能修改 ADT 对象的内容</p>
+</li>
+</ul>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>单链表：next 指向 null 的节点才是表末节点</p>
+<h2 id="Java-基础知识复习"><a href="#Java-基础知识复习" class="headerlink" title="Java 基础知识复习"></a>Java 基础知识复习</h2><h3 id="接口方法声明未抛出异常，但方法的实现需要抛出异常而不能就地处理异常"><a href="#接口方法声明未抛出异常，但方法的实现需要抛出异常而不能就地处理异常" class="headerlink" title="接口方法声明未抛出异常，但方法的实现需要抛出异常而不能就地处理异常"></a>接口方法声明未抛出异常，但方法的实现需要抛出异常而不能就地处理异常</h3><ul>
+<li><p>如果接口的方法声明中没有抛出异常(throws)，那么其实现类就不能在方法声明中抛出异常(throws)。</p>
+</li>
+<li><p>如果实现类自身处理(try-catch)异常不符合逻辑，那么只能抛出。</p>
+</li>
+</ul>
+<p>基于以上两点，只能在方法体内 <code>throw</code> 需要抛出的异常。<br>但是，如果需要抛出的异常是 <strong>checked exception</strong>, 又必须在方法声明中 <code>throws</code> 要抛出的异常。<br>因此只能从异常类的定义上入手，使要抛出的异常类继承自 <code>RuntimeException</code>， 而不是 <code>Exception</code>，<br>使要抛出的异常成为 <strong>unchecked exception</strong>。</p>
+<p>例如：</p>
+<p>在基于定长数组实现 Stack 的类 ArrayStack 中 push 方法的定义需要抛出 ArrayStackFullException，<br>但 push 方法是从接口 Stack 继承而来，所以不能在方法声明中 throws, 若要 try-catch,则不符合逻辑，<br>因为此处不需要处理此种异常，因为这是上层用户使用 ArrayStack 不当产生的异常，所以需要向上抛出，而不是就地处理，<br>因此，只能修改 ArrayStackFullException 定义，使之继承自 RuntimeException 而不是 Exception</p>
+<hr>
+<p>于2017-11-29 记录</p>
+<p>如果 <strong>Overridden</strong> 的方法声明中没有 <code>throws</code> 异常，那么 <code>@Override</code> 方法不能在其方法声明中 <code>throws</code> 检查异常，却能 <code>throws</code> RuntimeException。</p>
+<h3 id="Sundry"><a href="#Sundry" class="headerlink" title="Sundry"></a>Sundry</h3><p>通过Arrays.asList产生的集合的contains方法不能对基本类型使用</p>
+<p>在幂函数计算中发现，如果表达式中包含了相同的子表达式，或者一个子表达式的计算包含了另一个子表达式的计算，由于程序时顺序执行的，<br>所以相同的计算会进行多次，大规模问题会非常耗时，应当使之只运算一次,简单的情况，可以将第一次的结果保存到变量v中，而第二个子表达式不再进行计算，<br>转而使用刚才已经运算完成的值，也就是变量v保存的值。也就是减少重复和冗余计算</p>
+<p>运算符的结合性是指优先级相同时的运算顺序</p>
 
       
     </div>
@@ -408,8 +469,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/22/git-win-ssh-agent/" rel="next" title="git-win-ssh-agent">
-                <i class="fa fa-chevron-left"></i> git-win-ssh-agent
+              <a href="/2017/08/19/git-server/" rel="next" title="配置 Git 服务器">
+                <i class="fa fa-chevron-left"></i> 配置 Git 服务器
               </a>
             
           </div>
@@ -463,8 +524,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Will Yang">
           <p class="site-author-name" itemprop="name">Will Yang</p>
@@ -477,7 +547,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -554,6 +624,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据结构一览"><span class="nav-number">1.</span> <span class="nav-text">基本数据结构一览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADT-定义"><span class="nav-number">3.</span> <span class="nav-text">ADT 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADT-实现类"><span class="nav-number">4.</span> <span class="nav-text">ADT 实现类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表"><span class="nav-number">5.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-基础知识复习"><span class="nav-number">6.</span> <span class="nav-text">Java 基础知识复习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接口方法声明未抛出异常，但方法的实现需要抛出异常而不能就地处理异常"><span class="nav-number">6.1.</span> <span class="nav-text">接口方法声明未抛出异常，但方法的实现需要抛出异常而不能就地处理异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sundry"><span class="nav-number">6.2.</span> <span class="nav-text">Sundry</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -588,6 +674,15 @@
     NexT.Mist
   </a>
 </div>
+
+
+
+  <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
 
 
         
